@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <_PostProcessingItem Include="ShibikaKhatri22068731CW1.app/Contents/MacOS/ShibikaKhatri22068731CW1">
+      <IsAppExtension>false</IsAppExtension>
+      <BCSymbolMapName>ShibikaKhatri22068731CW1.bcsymbolmap</BCSymbolMapName>
+      <NoDSymUtil>true</NoDSymUtil>
+      <dSYMSourcePathExists>false</dSYMSourcePathExists>
+      <NoSymbolStrip>true</NoSymbolStrip>
+      <dSYMInfoPlistRelativePath>ShibikaKhatri22068731CW1.app.dSYM\Contents\Info.plist</dSYMInfoPlistRelativePath>
+      <SymbolFile>/Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/obj/Debug/net8.0-maccatalyst/maccatalyst-arm64/mtouch-symbols.list</SymbolFile>
+      <DSymName>ShibikaKhatri22068731CW1.app.dSYM</DSymName>
+      <SourceProjectPath>/Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1</SourceProjectPath>
+      <IsXPCService></IsXPCService>
+    </_PostProcessingItem>
+  </ItemGroup>
+</Project>

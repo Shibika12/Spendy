@@ -1,0 +1,77 @@
+
+/* Styling for the form container */
+.form-container[b-fbrcesbcyu] {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Basic form layout */
+.transaction-form[b-fbrcesbcyu] {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Styling for each form group */
+.form-group[b-fbrcesbcyu] {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Label styling */
+.form-group label[b-fbrcesbcyu] {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+/* Input styling */
+.form-group input[b-fbrcesbcyu],
+.form-group select[b-fbrcesbcyu],
+.form-group textarea[b-fbrcesbcyu] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+/* Focus effect on input fields */
+.form-group input:focus[b-fbrcesbcyu],
+.form-group select:focus[b-fbrcesbcyu],
+.form-group textarea:focus[b-fbrcesbcyu] {
+    border-color: #007bff;
+}
+
+/* Textarea specific styling */
+.form-group textarea[b-fbrcesbcyu] {
+    resize: vertical;
+}
+
+/* Button styling */
+.form-actions button[b-fbrcesbcyu] {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Hover effect for button */
+.form-actions button:hover[b-fbrcesbcyu] {
+    background-color: #0056b3;
+}
+
+/* Placeholder text styling */
+.form-group input[b-fbrcesbcyu]::placeholder,
+.form-group textarea[b-fbrcesbcyu]::placeholder {
+    color: #888;
+}

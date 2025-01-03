@@ -1,0 +1,31 @@
+@page "/edit-transaction/{TransactionId:int}"
+@using ShibikaKhatri22068731CW1.Services.Interface
+@using ShibikaKhatri22068731CW1.Model;
+@inject NavigationManager Nav
+@inject ITransactionService TransactionService
+<h3>Edit Transaction</h3>
+
+@if (transaction == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <form>
+        <label>Title:</label>
+        <input @bind="transaction.Title" />
+        <label>Amount:</label>
+        <input type="number" @bind="transaction.Amount" />
+        <label>Type:</label>
+        <!-- Make transaction type readonly -->
+        <input value="@transaction.Type" readonly style="background-color: #f9f9f9; border: none;" />
+        <label>Date:</label>
+        <input type="date" @bind="transaction.Date" />
+        <label>Tags:</label>
+        <input @bind="transaction.Tags" />
+        <label>Note:</label>
+        <textarea @bind="transaction.Note"></textarea>
+        <button type="button" @onclick="SaveTransaction">Save</button>
+        <button type="button" @onclick="Cancel">Cancel</button>
+    </form>
+}

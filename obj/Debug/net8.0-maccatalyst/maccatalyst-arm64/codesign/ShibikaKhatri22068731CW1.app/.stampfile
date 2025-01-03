@@ -1,0 +1,1 @@
+-v --force --timestamp=none --sign - --entitlements /Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/obj/Debug/net8.0-maccatalyst/maccatalyst-arm64/Entitlements.xcent /Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/bin/Debug/net8.0-maccatalyst/maccatalyst-arm64/ShibikaKhatri22068731CW1.app
