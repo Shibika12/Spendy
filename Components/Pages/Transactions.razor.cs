@@ -1,48 +1,126 @@
-using ShibikaKhatri22068731CW1.Model;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using ShibikaKhatri22068731CW1.Services;
-namespace ShibikaKhatri22068731CW1.Components.Pages;
+using ShibikaKhatri22068731CW1.Services.Interface;
+using ShibikaKhatri22068731CW1.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-public partial class Transactions : ComponentBase
+namespace ShibikaKhatri22068731CW1.Components.Pages
 {
-    private List<Transaction> transactions = new List<Transaction>();
-    private readonly TransactionService transactionService = new TransactionService();
+    public partial class Transactions : ComponentBase
+    {
+        private List<Transaction> transactions = new List<Transaction>();
+        private List<Transaction> FilteredTransactions = new List<Transaction>();
 
-    protected override async Task OnInitializedAsync()
-    {
-        // Get all transactions from the service
-        try
-        {
-            // Load transactions from the CSV file
-            transactions = await transactionService.LoadTransactionsAsync();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error loading transactions: {ex.Message}");
-        }
-        
-    }
-    private void NavigateToEditPage(int transactionId)
-    {
-        Nav.NavigateTo($"/edit-transaction/{transactionId}");
-    }
+        private decimal _totalInflows;
+        private decimal _totalOutflows;
 
-    private async Task DeleteTransaction(int transactionId)
-    {
-        var confirmed = await JS.InvokeAsync<bool>("confirm", "Are you sure you want to delete this transaction?");
-        if (confirmed)
+        private string SearchTitle;
+        private string FilterType;
+        private string FilterTags;
+        private DateTime? StartDate;
+        private DateTime? EndDate;
+
+        // Sorting variables
+        private string SortBy { get; set; } = "Date";
+        private bool IsAscending { get; set; } = true;
+
+        protected override async Task OnInitializedAsync()
+        {
+            // Fetch all transactions
+            await LoadTransactionsAsync();
+        }
+
+        private async Task LoadTransactionsAsync()
         {
             try
             {
-                await TransactionService.DeleteTransactionAsync(transactionId);
-                // Reload the transactions list after deletion
                 transactions = await TransactionService.LoadTransactionsAsync();
+                FilteredTransactions = transactions;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading transactions: {ex.Message}");
+            }
+        }
+
+        private void NavigateToEditPage(int transactionId)
+        {
+            Nav.NavigateTo($"/edit-transaction/{transactionId}");
+        }
+
+        private void NavigateToAddPage()
+        {
+            Nav.NavigateTo("/addtransaction");
+        }
+
+        private async Task DeleteTransaction(int transactionId)
+        {
+            try
+            {
+                // Call the delete service
+                await TransactionService.DeleteTransactionAsync(transactionId);
+
+                // Reload transactions
+                await LoadTransactionsAsync();
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error deleting transaction: {ex.Message}");
             }
+        }
+
+        private async Task ApplyFiltersAndSearch()
+        {
+            try
+            {
+                var filtered = await TransactionService.FilterTransactionsAsync(StartDate, EndDate, FilterType, FilterTags);
+
+                if (!string.IsNullOrEmpty(SearchTitle))
+                {
+                    filtered = filtered.Where(t => t.Title.Contains(SearchTitle, StringComparison.OrdinalIgnoreCase)).ToList();
+                }
+
+                FilteredTransactions = filtered;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error filtering transactions: {ex.Message}");
+            }
+        }
+
+        private async Task ApplySorting()
+        {
+            try
+            {
+                if (IsAscending)
+                {
+                    FilteredTransactions = await TransactionService.SortTransactionsAscending(SortBy);
+                }
+                else
+                {
+                    FilteredTransactions = await TransactionService.SortTransactionsDescending(SortBy);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error sorting transactions: {ex.Message}");
+            }
+        }
+
+        private async Task ClearFilters()
+        {
+            SearchTitle = string.Empty;
+            FilterTags = string.Empty;
+            FilterType = string.Empty;
+            StartDate = null;
+            EndDate = null;
+            SortBy = "Date";
+            IsAscending = true;
+
+            await LoadTransactionsAsync();
         }
     }
 }

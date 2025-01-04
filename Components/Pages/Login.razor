@@ -3,75 +3,45 @@
 @inject NavigationManager Nav
 @inject IUserService UserService
 
-@*<div class="form-login">
-    <form class="text-center" @onsubmit="HandleLogin">
-        <img class="mb-4" src="/appicon.png" alt="" height="72">
-        <h1 class="h3 mb-3 fw-normal">Please Login</h1>
+<MudContainer Style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(135deg, #e0c3fc, #8ec5fc);">
+    <!-- Page Title -->
+    <MudText Typo="Typo.h3" Style="margin-bottom: 20px; font-family: 'Arial', sans-serif; color: white; font-weight: bold;">
+        Welcome to Spendy
+    </MudText>
 
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" @bind="Users.Username" placeholder="Username" />
-            <label for="floatingInput">Username</label>
-        </div>
+    <!-- Login Form -->
+    <MudPaper Style="padding: 30px; width: 100%; max-width: 400px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); border-radius: 10px; background-color: white;">
+        <MudText Typo="Typo.h4" Style="text-align: center; margin-bottom: 20px; font-family: Arial, sans-serif; color: #333;">Log in to Your Account</MudText>
 
-        <!-- Password Input -->
-        <div class="form-floating mb-3">
-            <input type="password" class="form-control" @bind="Users.Password" placeholder="Password" />
-            <label for="floatingPassword">Password</label>
-        </div>
+        <MudForm Model="@Users" @ref="form" Validation="true">
+            <!-- Username Field -->
+            <MudTextField T="string" Label="Username" Variant="Variant.Filled" @bind-Value="Users.Username"
+                          For="@(() => Users.Username)" Required="true" RequiredError="Username is required."
+                          Style="margin-bottom: 15px; width: 100%;" />
 
-        @if (!string.IsNullOrEmpty(ErrorMessage))
-        {
-            <div class="alert alert-danger">@ErrorMessage</div>
-        }
-        <button class="btn btn-lg btn-primary">
-            Login
-        </button>
-    </form>
-</div>*@
+            <!-- Password Field -->
+            <MudTextField T="string" Label="Password" Variant="Variant.Filled" InputType="InputType.Password"
+                          @bind-Value="Users.Password" For="@(() => Users.Password)" Required="true"
+                          RequiredError="Password is required." Style="margin-bottom: 15px; width: 100%;" />
 
-<MudContainer Class="d-flex justify-center align-center" Style="height:100vh;">
-    <MudGrid>
-        <!-- Left Side: Login Form -->
-        <MudItem xs="12" md="6">
-            <MudPaper Class="p-6 d-flex flex-column gap-4" Elevation="3">
-                <MudText Typo="Typo.h4">Log in to Your Account</MudText>
-                <MudForm Model="@Users" @ref="form" Validation="true">
-                <!-- Username Field -->
-                    <MudTextField T="string" Label="Username" Variant="Variant.Filled" @bind-Value="Users.Username"
-                                  For="@(() => Users.Username)" Required="true" RequiredError="Username is required." />
+            <!-- Preferred Currency Dropdown -->
+            <MudSelect T="string" @bind-Value="Users.PreferredCurrency" Variant="Variant.Outlined" Label="Preferred Currency"
+                       Style="margin-bottom: 15px; width: 100%;">
+                <MudSelectItem Value="@("USD")" />
+                <MudSelectItem Value="@("NRS")" />
+            </MudSelect>
 
-                <!-- Password Field -->
-                <MudTextField T="string" Label="Password" Variant="Variant.Filled" InputType="InputType.Password"
-                              @bind-Value="Users.Password" For="@(() => Users.Password)" Required="true"
-                              RequiredError="Password is required." Class="mt-3" />
+            @if (!string.IsNullOrEmpty(ErrorMessage))
+            {
+                <MudAlert Severity="Severity.Error" Style="margin-bottom: 15px;">
+                    @ErrorMessage
+                </MudAlert>
+            }
 
-                <MudSelect T="string" @bind-Value="Users.PreferredCurrency" Variant="Variant.Outlined" Label="Preferred Currency">
-                    <MudSelectItem Value="@("USD")" />
-                    <MudSelectItem Value="@("EUR")" />
-                    <MudSelectItem Value="@("NRS")" />
-                </MudSelect>
-                
-                    @if (!string.IsNullOrEmpty(ErrorMessage))
-                    {
-                        <MudAlert Severity="Severity.Error" Class="mt-3">
-                            @ErrorMessage
-                        </MudAlert>
-                    }
-                <!-- Login Button -->
-                    <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="HandleLogin" Class="mt-4">
-                        Login
-                    </MudButton>
-                </MudForm>
-            </MudPaper>
-        </MudItem>
-
-        <!-- Right Side: Image -->
-        <MudItem xs="12" md="6" Class="d-flex justify-center align-center">
-            <img src="/sloth.jpg" alt="Login Illustration"
-                 style="max-width:100%; height:auto; border-radius:8px;" />
-        </MudItem>
-    </MudGrid>
+            <!-- Login Button -->
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="HandleLogin" Style="width: 100%; padding: 10px;">
+                Login
+            </MudButton>
+        </MudForm>
+    </MudPaper>
 </MudContainer>
-
-        
-        

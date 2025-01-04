@@ -6,8 +6,8 @@ namespace ShibikaKhatri22068731CW1.Services
     // UserService class implementing IUserService
     public class UserService : IUserService
     {
-        private const string DefaultUsername = "admin";
-        private const string DefaultPassword = "password";
+        private const string DefaultUsername = "Shibika";
+        private const string DefaultPassword = "test";
         
         private User _loggedInUser;
         // Property to track whether the user is logged in.

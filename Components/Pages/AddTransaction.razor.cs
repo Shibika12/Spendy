@@ -8,24 +8,39 @@ namespace ShibikaKhatri22068731CW1.Components.Pages;
 public partial class AddTransaction : ComponentBase
 {
     private Transaction newTransaction = new Transaction();
-    private readonly TransactionService transactionService = new TransactionService();
+
 
     private string errorMessage;
 
     private async Task AddNewTransaction()
     {
+
         try
         {
-            var existingTransactions = await transactionService.LoadTransactionsAsync();
+            var existingTransactions = await TransactionService.LoadTransactionsAsync();
+
+            // If it's an outflow, check the balance first
+            if (newTransaction.Type == "Debit")
+            {
+                var (totalInflows, totalOutflows, totalDebt, totalClearedDebt, remainingDebt, balance, isSufficientBalance) = 
+                    TransactionService.CalculateTransactionSums(existingTransactions);
+
+                // Check if there's enough balance for this outflow
+                if (newTransaction.Amount > balance)
+                {
+                    errorMessage = $"Insufficient balance. Current balance: {balance:C}, Attempted outflow: {newTransaction.Amount:C}";
+                    return; // Don't proceed with adding the transaction
+                }
+            }
+
             int nextTransactionId = existingTransactions.Count > 0
                 ? existingTransactions.Max(t => t.TransactionId) + 1
-                : 1; // Start with 1 if no transactions exist
+                : 1;
 
-            // Set the TransactionId dynamically
             newTransaction.TransactionId = nextTransactionId;
             await TransactionService.SaveTransactionAsync(newTransaction);
             newTransaction = new Transaction(); // Reset the form
-            
+
             Nav.NavigateTo("/transactions");
         }
         catch (Exception ex)
