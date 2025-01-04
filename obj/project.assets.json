@@ -33296,11 +33296,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/ShibikaKhatri22068731CW1.csproj",
+      "projectUniqueName": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/ShibikaKhatri22068731CW1.csproj",
       "projectName": "ShibikaKhatri22068731CW1",
-      "projectPath": "/Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/ShibikaKhatri22068731CW1.csproj",
+      "projectPath": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/ShibikaKhatri22068731CW1.csproj",
       "packagesPath": "/Users/shibikakhatri/.nuget/packages/",
-      "outputPath": "/Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/obj/",
+      "outputPath": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/obj/",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "configFilePaths": [

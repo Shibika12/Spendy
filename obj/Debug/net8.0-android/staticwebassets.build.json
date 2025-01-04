@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "heAQaR0a2G3IL6Z5vR6uLXomzS2Tago6wwbdMoqiqjw=",
+  "Hash": "5d+EY/OjUaoFLYXuHhhEUV8/HkdrSop5cCIsMpFq750=",
   "Source": "ShibikaKhatri22068731CW1",
   "BasePath": "/",
   "Mode": "Root",
@@ -10,7 +10,7 @@
     {
       "Name": "ShibikaKhatri22068731CW1/wwwroot",
       "Source": "ShibikaKhatri22068731CW1",
-      "ContentRoot": "/Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/wwwroot/",
+      "ContentRoot": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/wwwroot/",
       "BasePath": "/",
       "Pattern": "**"
     }
@@ -55,10 +55,10 @@
       "OriginalItemSpec": "/Users/shibikakhatri/.nuget/packages/mudblazor/7.15.0/staticwebassets/MudBlazor.min.js"
     },
     {
-      "Identity": "/Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/obj/Debug/net8.0-android/scopedcss/bundle/ShibikaKhatri22068731CW1.styles.css",
+      "Identity": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/obj/Debug/net8.0-android/scopedcss/bundle/ShibikaKhatri22068731CW1.styles.css",
       "SourceId": "ShibikaKhatri22068731CW1",
       "SourceType": "Computed",
-      "ContentRoot": "/Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/obj/Debug/net8.0-android/scopedcss/bundle/",
+      "ContentRoot": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/obj/Debug/net8.0-android/scopedcss/bundle/",
       "BasePath": "/",
       "RelativePath": "ShibikaKhatri22068731CW1.styles.css",
       "AssetKind": "All",
@@ -71,13 +71,13 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/obj/Debug/net8.0-android/scopedcss/bundle/ShibikaKhatri22068731CW1.styles.css"
+      "OriginalItemSpec": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/obj/Debug/net8.0-android/scopedcss/bundle/ShibikaKhatri22068731CW1.styles.css"
     },
     {
-      "Identity": "/Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/obj/Debug/net8.0-android/scopedcss/projectbundle/ShibikaKhatri22068731CW1.bundle.scp.css",
+      "Identity": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/obj/Debug/net8.0-android/scopedcss/projectbundle/ShibikaKhatri22068731CW1.bundle.scp.css",
       "SourceId": "ShibikaKhatri22068731CW1",
       "SourceType": "Computed",
-      "ContentRoot": "/Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/obj/Debug/net8.0-android/scopedcss/projectbundle/",
+      "ContentRoot": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/obj/Debug/net8.0-android/scopedcss/projectbundle/",
       "BasePath": "/",
       "RelativePath": "ShibikaKhatri22068731CW1.bundle.scp.css",
       "AssetKind": "All",
@@ -90,13 +90,13 @@
       "AssetTraitValue": "ProjectBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/obj/Debug/net8.0-android/scopedcss/projectbundle/ShibikaKhatri22068731CW1.bundle.scp.css"
+      "OriginalItemSpec": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/obj/Debug/net8.0-android/scopedcss/projectbundle/ShibikaKhatri22068731CW1.bundle.scp.css"
     },
     {
-      "Identity": "/Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/wwwroot/css/app.css",
+      "Identity": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/wwwroot/css/app.css",
       "SourceId": "ShibikaKhatri22068731CW1",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/wwwroot/",
+      "ContentRoot": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/wwwroot/",
       "BasePath": "/",
       "RelativePath": "css/app.css",
       "AssetKind": "All",
@@ -112,10 +112,10 @@
       "OriginalItemSpec": "wwwroot/css/app.css"
     },
     {
-      "Identity": "/Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/wwwroot/css/bootstrap/bootstrap.min.css",
+      "Identity": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/wwwroot/css/bootstrap/bootstrap.min.css",
       "SourceId": "ShibikaKhatri22068731CW1",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/wwwroot/",
+      "ContentRoot": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/wwwroot/",
       "BasePath": "/",
       "RelativePath": "css/bootstrap/bootstrap.min.css",
       "AssetKind": "All",
@@ -131,10 +131,10 @@
       "OriginalItemSpec": "wwwroot/css/bootstrap/bootstrap.min.css"
     },
     {
-      "Identity": "/Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/wwwroot/css/bootstrap/bootstrap.min.css.map",
+      "Identity": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/wwwroot/css/bootstrap/bootstrap.min.css.map",
       "SourceId": "ShibikaKhatri22068731CW1",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/wwwroot/",
+      "ContentRoot": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/wwwroot/",
       "BasePath": "/",
       "RelativePath": "css/bootstrap/bootstrap.min.css.map",
       "AssetKind": "All",
@@ -150,10 +150,10 @@
       "OriginalItemSpec": "wwwroot/css/bootstrap/bootstrap.min.css.map"
     },
     {
-      "Identity": "/Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/wwwroot/favicon.png",
+      "Identity": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/wwwroot/favicon.png",
       "SourceId": "ShibikaKhatri22068731CW1",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/wwwroot/",
+      "ContentRoot": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/wwwroot/",
       "BasePath": "/",
       "RelativePath": "favicon.png",
       "AssetKind": "All",
@@ -169,10 +169,10 @@
       "OriginalItemSpec": "wwwroot/favicon.png"
     },
     {
-      "Identity": "/Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/wwwroot/index.html",
+      "Identity": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/wwwroot/index.html",
       "SourceId": "ShibikaKhatri22068731CW1",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/shibikakhatri/RiderProjects/ShibikaKhatri22068731CW1/wwwroot/",
+      "ContentRoot": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/wwwroot/",
       "BasePath": "/",
       "RelativePath": "index.html",
       "AssetKind": "All",
