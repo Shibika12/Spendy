@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ShibikaKhatri22068731CW1")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+e58c84d22aa53b1ce3ad10a2352edc6fd088ae14")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+b0c7915c8cc97ffe4f7c1cd461e7538be8e3655d")]
 [assembly: System.Reflection.AssemblyProductAttribute("ShibikaKhatri22068731CW1")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ShibikaKhatri22068731CW1")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
