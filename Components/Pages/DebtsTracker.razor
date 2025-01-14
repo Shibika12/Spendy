@@ -1,0 +1,88 @@
+@page "/debts-tracker"
+@using ShibikaKhatri22068731CW1.Services.Interface
+@inject IDebtService DebtService
+@inject NavigationManager NavigationManager
+
+
+<h3>Debt Tracking</h3>
+<h3>Debt Tracker</h3>
+
+<!-- Summary Cards -->
+
+<div class="container">
+<div class="row">
+    <div class="col-md-4">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <h5 class="card-title">Total Debts</h5>
+                <p class="card-text">10</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h5 class="card-title">Cleared Debts</h5>
+                
+                <p class="card-text">12</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <h5 class="card-title">Remaining Debts</h5>
+                
+                <p class="card-text">12</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr/>
+<button class="btn btn-dark mb-3 text-white" @onclick="NavigateToAddDebtEntry">
+    Add Debt Entry
+</button>
+<h4>Pending Debts</h4>
+
+
+    @if (debts == null || !debts.Any())
+    {
+        <p>No pending debts available.</p>
+    }
+    else
+    {
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Debt ID</th>
+            <th>Source of Debt</th>
+            <th>Amount</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Cleared From</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var debt in debts)
+        {
+            <tr>
+                <td>@debt.DebtId</td>
+                <td>@debt.SourceOfDebt</td>
+                <td>@debt.Amount</td>
+                <td>@debt.DueDate</td>
+                <td>@debt.Status</td>
+                <td>@debt.ClearedFrom</td>
+                <td>
+                    @if (debt.Status == "Pending")
+                    {
+                        <button class="btn btn-primary" @onclick="() => ClearDebt(debt.DebtId, debt.Amount)">Clear Debt</button>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    }
+</div>

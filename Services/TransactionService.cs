@@ -1,72 +1,81 @@
 using ShibikaKhatri22068731CW1.Model;
 using ShibikaKhatri22068731CW1.Services.Interface;
+
 namespace ShibikaKhatri22068731CW1.Services;
 
-public class TransactionService: ITransactionService
+public class TransactionService : ITransactionService
 {
     private readonly string _transactionsFilePath = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "transactions.csv");
-
+    
     public async Task SaveTransactionAsync(Transaction transaction)
+{
+    try
     {
-        try
+        
+        // Load all transactions from the file
+        var transactions = await LoadTransactionsAsync();
+
+            
+        // If it's an outflow, verify sufficient balance
+        if (transaction.Type == "Debit")
         {
-            // Load all transactions from the file
-            var transactions = await LoadTransactionsAsync();
-            if (transaction.Type == "Debit")
+            var (totalInflows, totalOutflows, _, _, _, balance, _) = CalculateTransactionSums(transactions);
+            
+            // For updates, exclude the existing transaction amount from the balance calculation
+            var existingTrans = transactions.FirstOrDefault(t => t.TransactionId == transaction.TransactionId);
+            if (existingTrans != null && existingTrans.Type == "Debit")
             {
-                var (totalInflows, totalOutflows, _, _, _, balance, _) = CalculateTransactionSums(transactions);
-                
-                // For updates, exclude the existing transaction amount from the balance calculation
-                var existingTrans = transactions.FirstOrDefault(t => t.TransactionId == transaction.TransactionId);
-                if (existingTrans != null && existingTrans.Type == "Debit")
-                {
-                    balance += existingTrans.Amount; // Add back the existing outflow amount
-                }
 
-                if (transaction.Amount > balance)
-                {
-                    throw new InvalidOperationException($"Insufficient balance. Current balance: {balance:C}, Attempted outflow: {transaction.Amount:C}");
-                }
+                balance += existingTrans.Amount; // Add back the existing outflow amount
             }
-            // Find and update the transaction in the list
-            var existingTransaction = transactions.FirstOrDefault(t => t.TransactionId == transaction.TransactionId);
-            if (existingTransaction != null)
             {
-                existingTransaction.Title = transaction.Title;
-                existingTransaction.Amount = transaction.Amount;
-                existingTransaction.Type = transaction.Type;
-                existingTransaction.Date = transaction.Date;
-                existingTransaction.Tags = transaction.Tags;
-                existingTransaction.Note = transaction.Note;
-            }
-            else
-            {
-                // If the transaction doesn't exist, it's a new one, so add it
-                transactions.Add(transaction);
-            }
-
-            // Rewrite the updated transactions list to the file
-            using (var writer = new StreamWriter(_transactionsFilePath, append: false))
-            {
-                // Write the header
-                await writer.WriteLineAsync("TransactionId,Title,Amount,Type,Date,Tags,Note");
-                foreach (var trans in transactions)
-                {
-                    string csvRow = $"{trans.TransactionId},{trans.Title}," +
-                                    $"{trans.Amount},{trans.Type},{trans.Date},{trans.Tags},{trans.Note}";
-                    await writer.WriteLineAsync(csvRow);
-                }
+                throw new InvalidOperationException($"Insufficient balance. Current balance: {balance:C}, Attempted outflow: {transaction.Amount:C}");
             }
         }
-        catch (Exception ex)
+        
+        // Find and update the transaction in the list
+        var existingTransaction = transactions.FirstOrDefault(t => t.TransactionId == transaction.TransactionId);
+        if (existingTransaction != null)
         {
-            Console.WriteLine($"Error saving transaction: {ex.Message}");
-            throw;
+            existingTransaction.Title = transaction.Title;
+            existingTransaction.Amount = transaction.Amount;
+            existingTransaction.Type = transaction.Type;
+            existingTransaction.Date = transaction.Date;
+            existingTransaction.Tags = transaction.Tags;
+            existingTransaction.Note = transaction.Note;
+        }
+        
+        else
+        {
+            
+            transactions.Add(transaction);
+        }
+    
+
+        // Rewrite the updated transactions list to the file
+        using (var writer = new StreamWriter(_transactionsFilePath, append: false))
+        {
+            // Write the header
+            await writer.WriteLineAsync("TransactionId,Title,Amount,Type,Date,Tags,Note");
+            foreach (var trans in transactions)
+            {
+                string escapedTags = trans.Tags?.Replace(",", "||") ?? "";
+                string escapedNote = trans.Note?.Replace(",", "||") ?? "";
+                string csvRow = $"{trans.TransactionId},{trans.Title}," +
+                                $"{trans.Amount},{trans.Type},{trans.Date}," +
+                                // Use double quotes to wrap tags and escape any existing quotes
+                                $"{escapedTags},{escapedNote}";
+                await writer.WriteLineAsync(csvRow);
+            }
         }
     }
-
-
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error saving transaction: {ex.Message}");
+        throw;
+    }
+}
     public async Task<List<Transaction>> LoadTransactionsAsync()
     {
         try
@@ -94,8 +103,8 @@ public class TransactionService: ITransactionService
                         Amount = decimal.Parse(fields[2]),
                         Type = fields[3],
                         Date = DateTime.Parse(fields[4]),
-                        Tags = fields[5],
-                        Note = fields[6]
+                        Tags = fields[5]?.Replace("||", ","),
+                        Note = fields[6]?.Replace("||", ",")
                     };
 
                     transactions.Add(transaction);
@@ -172,7 +181,7 @@ public class TransactionService: ITransactionService
                     await writer.WriteLineAsync("TransactionId,Title,Amount,Type,Date,Tags,Note");
                     foreach (var trans in transactions)
                     {
-                        
+
                         string csvRow = $"{trans.TransactionId},{trans.Title}," +
                                         $"{trans.Amount},{trans.Type},{trans.Date},{trans.Tags},{trans.Note}";
                         await writer.WriteLineAsync(csvRow);
@@ -195,14 +204,14 @@ public class TransactionService: ITransactionService
         var transactions = await LoadTransactionsAsync();
         return transactions.Where(t => t.Title.Contains(title, StringComparison.OrdinalIgnoreCase)).ToList();
     }
-    public async Task<List<Transaction>> FilterTransactionsAsync(DateTime? startDate, DateTime? endDate, string type, string tags)
+    public async Task<List<Transaction>> FilterTransactionsAsync(DateTime? startDate, DateTime? endDate, string Type, string Tags)
     {
         var transactions = await LoadTransactionsAsync();
         return transactions.Where(t =>
             (!startDate.HasValue || t.Date >= startDate.Value) &&
             (!endDate.HasValue || t.Date <= endDate.Value) &&
-            (string.IsNullOrEmpty(type) || t.Type.Equals(type, StringComparison.OrdinalIgnoreCase)) &&
-            (string.IsNullOrEmpty(tags) || t.Tags.Contains(tags, StringComparison.OrdinalIgnoreCase))
+            (string.IsNullOrEmpty(Type) || t.Type.Equals(Type, StringComparison.OrdinalIgnoreCase)) &&
+            (string.IsNullOrEmpty(Tags) || t.Tags.Equals(Tags, StringComparison.OrdinalIgnoreCase))
         ).ToList();
     }
     public async Task<List<Transaction>> SortTransactionsAsync(string sortBy, bool isAscending)
@@ -264,4 +273,15 @@ public class TransactionService: ITransactionService
     {
         return await LoadTransactionsAsync();
     }
+    public (int totalCount, decimal totalInflows, decimal totalOutflows, decimal balance) 
+        GetTransactionSummary(List<Transaction> transactions)
+    {
+        int totalCount = transactions.Count;
+        decimal totalInflows = transactions.Where(t => t.Type == "Credit").Sum(t => t.Amount);
+        decimal totalOutflows = transactions.Where(t => t.Type == "Debit").Sum(t => t.Amount);
+        decimal balance = totalInflows - totalOutflows;
+
+        return (totalCount, totalInflows, totalOutflows, balance);
+    }
 }
+

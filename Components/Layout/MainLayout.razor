@@ -11,14 +11,15 @@
 
 <MudLayout>
     @if (!IsLoginPage){
-        <MudAppBar Elevation="1">
-            <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-            <MudText Typo="Typo.h5" Class="ml-3">Spendy</MudText>
-            <MudSpacer />
-        </MudAppBar>
-        <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
-            <NavMenu/>
-        </MudDrawer>
+    <MudAppBar Elevation="1" Style="background-color: #333; color: white;">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Style="color: white;" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudText Typo="Typo.h5" Class="ml-3">Income Expense Tracker App</MudText>
+        <MudSpacer />
+        <MudButton Variant="Variant.Filled" Style="background-color: #333; color: white;" OnClick="@((e) => ShowLogoutConfirmation())">Logout</MudButton>
+    </MudAppBar>
+    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2" Style="background-color: #333; color: white;">
+        <NavMenu />
+    </MudDrawer>
     }
     <MudMainContent>
         @Body

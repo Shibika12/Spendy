@@ -16,6 +16,12 @@ namespace ShibikaKhatri22068731CW1.Components.Pages
 
         private decimal _totalInflows;
         private decimal _totalOutflows;
+        private (int totalCount, decimal totalInflows, decimal totalOutflows, decimal balance) _transactionSummary;
+        private readonly List<string> _defaultTags = new List<string>
+        {
+            "Yearly", "Monthly", "Food", "Drinks", "Clothes", "Gadgets",
+            "Miscellaneous", "Fuel", "Rent", "EMI", "Party"
+        };
 
         private string SearchTitle;
         private string FilterType;
@@ -121,6 +127,24 @@ namespace ShibikaKhatri22068731CW1.Components.Pages
             IsAscending = true;
 
             await LoadTransactionsAsync();
+        }
+        private async Task DeleteTag(string tag)
+        {
+            var confirmed = await JS.InvokeAsync<bool>("confirm", $"Are you sure you want to delete the tag '{tag}'?");
+            if (confirmed)
+            {
+                try
+                {
+                    await TagService.DeleteCustomTagAsync(tag);
+                    // Refresh transactions to update tags
+                    FilteredTransactions = await TransactionService.LoadTransactionsAsync();
+                    StateHasChanged();
+                }
+                catch (Exception ex)
+                {
+                    await JS.InvokeVoidAsync("alert", $"Error deleting tag: {ex.Message}");
+                }
+            }
         }
     }
 }

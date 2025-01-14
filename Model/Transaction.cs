@@ -7,6 +7,6 @@ public class Transaction
     public decimal Amount { get; set; }  // Amount of the transaction
     public string Type { get; set; }  // Type of transaction: Credit, Debit, Debt
     public DateTime Date { get; set; }  // Date of the transaction
-    public string Tags { get; set; }  // Comma separated list of tags
+    public string Tags { get; set; } 
     public string Note { get; set; }  // Additional information or description about the transaction
 }

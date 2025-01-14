@@ -20,6 +20,8 @@ namespace ShibikaKhatri22068731CW1
             builder.Services.AddMauiBlazorWebView();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<ITransactionService, TransactionService>();
+            builder.Services.AddScoped<IDebtService, DebtService>();
+            builder.Services.AddScoped<ITagService, TagService>();
             builder.Services.AddMudServices();
 
 #if DEBUG

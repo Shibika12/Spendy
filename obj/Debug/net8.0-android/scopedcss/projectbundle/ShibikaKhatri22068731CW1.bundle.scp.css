@@ -179,54 +179,71 @@ main[b-t6kwjr8yjk] {
     }
 }
 /* /Components/Pages/AddTransaction.razor.rz.scp.css */
-
-/* Styling for the form container */
+/* Card layout styling */
 .form-container[b-fbrcesbcyu] {
     max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 40px auto;
+    padding: 30px;
+    background: linear-gradient(135deg, #DBF9F0, #f0dbf9); /* Gradient background */
+    border-radius: 15px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    color: #fff; /* White text to contrast with gradient */
+}
+
+/* Title styling */
+.form-title[b-fbrcesbcyu] {
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #f6f5f5;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Basic form layout */
 .transaction-form[b-fbrcesbcyu] {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
 }
 
 /* Styling for each form group */
 .form-group[b-fbrcesbcyu] {
     display: flex;
     flex-direction: column;
+    margin-bottom: 20px;
 }
 
 /* Label styling */
 .form-group label[b-fbrcesbcyu] {
     font-size: 1rem;
-    color: #333;
-    margin-bottom: 5px;
+    color: #fff;
+    margin-bottom: 8px;
+    font-weight: 500;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 /* Input styling */
 .form-group input[b-fbrcesbcyu],
 .form-group select[b-fbrcesbcyu],
 .form-group textarea[b-fbrcesbcyu] {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
     font-size: 1rem;
+    color: #333;
+    background-color: #f3f3f3;
     outline: none;
-    transition: border-color 0.3s;
+    transition: all 0.3s ease;
 }
 
 /* Focus effect on input fields */
 .form-group input:focus[b-fbrcesbcyu],
 .form-group select:focus[b-fbrcesbcyu],
 .form-group textarea:focus[b-fbrcesbcyu] {
-    border-color: #007bff;
+    border-color: #2575fc;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(37, 117, 252, 0.5);
 }
 
 /* Textarea specific styling */
@@ -236,19 +253,31 @@ main[b-t6kwjr8yjk] {
 
 /* Button styling */
 .form-actions button[b-fbrcesbcyu] {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
+    padding: 20px 20px;
+    background-color: #5781e3;
+    color: white;
     border: none;
-    border-radius: 4px;
-    font-size: 1rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(37, 117, 252, 0.2);
 }
 
 /* Hover effect for button */
 .form-actions button:hover[b-fbrcesbcyu] {
-    background-color: #0056b3;
+    background-color: #6a11cb;
+    transform: translateY(-3px);
+}
+
+/* Error message styling */
+.alert[b-fbrcesbcyu] {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 1rem;
 }
 
 /* Placeholder text styling */
@@ -256,78 +285,63 @@ main[b-t6kwjr8yjk] {
 .form-group textarea[b-fbrcesbcyu]::placeholder {
     color: #888;
 }
+
+/* Additional animations for form elements */
+.form-group input[b-fbrcesbcyu],
+.form-group select[b-fbrcesbcyu],
+.form-group textarea[b-fbrcesbcyu] {
+    transition: all 0.3s ease-out;
+}
 /* /Components/Pages/EditTransaction.razor.rz.scp.css */
 /* /Components/Pages/Home.razor.rz.scp.css */
 /* /Components/Pages/Index.razor.rz.scp.css */
 /* /Components/Pages/Login.razor.rz.scp.css */
 /* /Components/Pages/Transactions.razor.rz.scp.css */
-/* Styling for the table container */
+.page-title[b-fasky44z4z] {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007bff;
+    text-transform: uppercase;
+}
+
+.transactions-container[b-fasky44z4z] {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.sorting-box[b-fasky44z4z], .filter-box[b-fasky44z4z] {
+    flex: 1;
+    padding: 20px;
+    background-color: #f0f8ff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sorting-box h3[b-fasky44z4z], .filter-box h3[b-fasky44z4z] {
+    font-size: 1.5rem;
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+}
+
+.form-group[b-fasky44z4z] {
+    margin-bottom: 15px;
+}
+
+.form-actions[b-fasky44z4z] {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
 .table-container[b-fasky44z4z] {
     max-width: 1000px;
-    margin: 20px auto;
+    margin: 0 auto;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Styling for the transactions table */
-.transactions-table[b-fasky44z4z] {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: Arial, sans-serif;
-}
-
-/* Styling for table header */
-.transactions-table thead[b-fasky44z4z] {
-    background-color: #007bff;
-    color: white;
-}
-
-.transactions-table th[b-fasky44z4z] {
-    padding: 12px;
-    text-align: left;
-    font-size: 1rem;
-    text-transform: uppercase;
-}
-
-/* Styling for table rows */
-.transactions-table tbody tr[b-fasky44z4z] {
-    border-bottom: 1px solid #ddd;
-}
-
-.transactions-table td[b-fasky44z4z] {
-    padding: 10px;
-    font-size: 0.95rem;
-    text-align: left;
-}
-
-/* Zebra-striping for table rows */
-.transactions-table tbody tr:nth-child(even)[b-fasky44z4z] {
-    background-color: #f2f2f2;
-}
-
-/* Hover effect for table rows */
-.transactions-table tbody tr:hover[b-fasky44z4z] {
-    background-color: #f5f5f5;
-    cursor: pointer;
-}
-
-/* Styling for empty row when no data is available */
-.transactions-table tbody td[colspan="7"][b-fasky44z4z] {
-    text-align: center;
-    font-size: 1.1rem;
-    color: #888;
-}
-
-/* Responsive styling for smaller screens */
-@media (max-width: 768px) {
-    .transactions-table th[b-fasky44z4z], .transactions-table td[b-fasky44z4z] {
-        padding: 8px;
-        font-size: 0.85rem;
-    }
-
-    .transactions-table[b-fasky44z4z] {
-        font-size: 0.85rem;
-    }
 }

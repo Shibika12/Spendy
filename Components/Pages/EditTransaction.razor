@@ -3,29 +3,74 @@
 @using ShibikaKhatri22068731CW1.Model;
 @inject NavigationManager Nav
 @inject ITransactionService TransactionService
-<h3>Edit Transaction</h3>
+@inject ITagService TagService
 
 @if (transaction == null)
 {
     <p>Loading...</p>
 }
 else
-{
-    <form>
-        <label>Title:</label>
-        <input @bind="transaction.Title" />
-        <label>Amount:</label>
-        <input type="number" @bind="transaction.Amount" />
-        <label>Type:</label>
-        <!-- Make transaction type readonly -->
-        <input value="@transaction.Type" readonly style="background-color: #f9f9f9; border: none;" />
-        <label>Date:</label>
-        <input type="date" @bind="transaction.Date" />
-        <label>Tags:</label>
-        <input @bind="transaction.Tags" />
-        <label>Note:</label>
-        <textarea @bind="transaction.Note"></textarea>
-        <button type="button" @onclick="SaveTransaction">Save</button>
-        <button type="button" @onclick="Cancel">Cancel</button>
+{ 
+    <form class="p-4 border rounded shadow-sm" style="max-width: 500px; margin: 0 auto; background-color: #fdfdfd;">
+    <h3 class="text-center mb-4" style="font-weight: bold; color: #333;">Edit Transaction Form</h3>
+    <div class="form-group mb-3">
+        <label for="title" style="font-weight: bold; color: #555;">Title:</label>
+        <input id="title" class="form-control" type="text" @bind="transaction.Title"
+               placeholder="Enter title" style="border: 1px solid #ccc; border-radius: 4px; padding: 10px;" />
+    </div>
+    <div class="form-group mb-3">
+        <label for="amount" style="font-weight: bold; color: #555;">Amount:</label>
+        <input id="amount" class="form-control" type="number" @bind="transaction.Amount"
+               placeholder="Enter amount" style="border: 1px solid #ccc; border-radius: 4px; padding: 10px;" />
+    </div>
+    <div class="form-group mb-3">
+        <label for="type" style="font-weight: bold; color: #555;">Type:</label>
+        <input id="type" class="form-control" value="@transaction.Type" readonly
+               style="background-color: #f9f9f9; border: 1px solid #eaeaea; border-radius: 4px; padding: 10px;" />
+    </div>
+    <div class="form-group mb-3">
+        <label for="date" style="font-weight: bold; color: #555;">Date:</label>
+        <input id="date" class="form-control" type="date" @bind="transaction.Date"
+               style="border: 1px solid #ccc; border-radius: 4px; padding: 10px;" />
+    </div>
+        <div class="form-group mb-3">
+            <label for="tags">Tags:</label>
+            <div class="d-flex flex-wrap gap-2 mb-2">
+                @foreach (var tag in availableTags)
+                {
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input"
+                               checked="@(selectedTags.Contains(tag))"
+                               @onchange="@(e => ToggleTag(tag))" />
+                        <label class="form-check-label">@tag</label>
+                    </div>
+                }
+            </div>
+            <div class="input-group">
+                <input type="text" class="form-control" @bind="newTag"
+                       placeholder="Add custom tag" />
+                <button class="btn btn-outline-secondary" type="button"
+                        @onclick="AddCustomTag">Add Tag</button>
+            </div>
+        </div>
+    <div class="form-group mb-3">
+        <label for="note" style="font-weight: bold; color: #555;">Note:</label>
+        <textarea id="note" class="form-control" @bind="transaction.Note"
+                      placeholder="Enter additional notes" style="border: 1px solid #ccc; border-radius: 4px; padding: 10px;">
+
+        </textarea>
+    </div>
+    <div class="d-flex justify-content-between mt-4">
+        <button type="button" @onclick="SaveTransaction"
+                class="btn btn-primary"
+                style="background-color: black; color: white; border: none; padding: 10px 20px; border-radius: 4px; font-weight: bold;">
+            Save
+        </button>
+        <button type="button" @onclick="Cancel"
+                class="btn btn-secondary"
+                style="background-color: black; color: white; border: none; padding: 10px 20px; border-radius: 4px; font-weight: bold;">
+            Cancel
+        </button>
+    </div>
     </form>
 }
