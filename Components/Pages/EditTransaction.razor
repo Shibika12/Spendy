@@ -28,6 +28,28 @@ else
         <input id="type" class="form-control" value="@transaction.Type" readonly
                style="background-color: #f9f9f9; border: 1px solid #eaeaea; border-radius: 4px; padding: 10px;" />
     </div>
+        @if (transaction.Type == "Debt")
+        {
+            <div class="form-group mb-3">
+                <label for="sourceOfDebt" style="font-weight: bold; color: #555;">Source of Debt:</label>
+                <input id="sourceOfDebt" class="form-control" type="text" @bind="transaction.SourceOfDebt"
+                       placeholder="Enter source of debt" style="border: 1px solid #ccc; border-radius: 4px; padding: 10px;" />
+            </div>
+            <div class="form-group mb-3">
+                <label for="dueDate" style="font-weight: bold; color: #555;">Due Date:</label>
+                <input id="dueDate" class="form-control" type="date" @bind="transaction.DueDate"
+                       style="border: 1px solid #ccc; border-radius: 4px; padding: 10px;" />
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="isCleared" style="font-weight: bold; color: #555;">Is Debt Cleared?</label>
+                <select id="isCleared" class="form-control" @bind="transaction.IsCleared"
+                        style="border: 1px solid #ccc; border-radius: 4px; padding: 10px;">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+        }
     <div class="form-group mb-3">
         <label for="date" style="font-weight: bold; color: #555;">Date:</label>
         <input id="date" class="form-control" type="date" @bind="transaction.Date"

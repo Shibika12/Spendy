@@ -28,6 +28,7 @@
                 <option value="">Select Type</option>
                 <option value="Credit">Credit</option>
                 <option value="Debit">Debit</option>
+                <option value="Debt">Debt</option>
             </InputSelect>
             <ValidationMessage For="@(() => newTransaction.Type)" class="text-danger" />
         </div>
@@ -78,6 +79,21 @@
             <label for="note">Notes:</label>
             <InputTextArea id="note" class="form-control" @bind-Value="newTransaction.Note" rows="4" placeholder="Add any additional notes here..." />
         </div>
+        @if (newTransaction.Type == "Debt")
+        {
+            <!-- Fields specific to debts -->
+            <div class="form-group mb-3">
+                <label for="sourceOfDebt" class="form-label">Source of Debt:</label>
+                <InputText id="sourceOfDebt" class="form-control" @bind-Value="newTransaction.SourceOfDebt" placeholder="Enter source of debt" />
+                <ValidationMessage For="@(() => newTransaction.SourceOfDebt)" class="text-danger" />
+            </div>
+            <div class="form-group mb-3">
+                <label for="dueDate" class="form-label">Due Date:</label>
+                <InputDate id="dueDate" class="form-control" @bind-Value="newTransaction.DueDate" />
+                <ValidationMessage For="@(() => newTransaction.DueDate)" class="text-danger" />
+            </div>
+
+        }
 
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">Add Transaction</button>

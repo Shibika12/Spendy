@@ -28,6 +28,7 @@ namespace ShibikaKhatri22068731CW1.Components.Pages
         {
             availableTags = await TagService.GetAllTagsAsync();
             newTransaction.Date = DateTime.Today; // Set default date
+            newTransaction.IsCleared = false; // Default IsCleared for new transactions
         }
 
         private void ToggleTag(string tag)
@@ -65,7 +66,7 @@ namespace ShibikaKhatri22068731CW1.Components.Pages
                             isSufficientBalance) = 
                         TransactionService.CalculateTransactionSums(existingTransactions);
 
-                    // Check if there's enough balance for this outflow
+                   
                     if (newTransaction.Amount > balance)
                     {
                         errorMessage =
@@ -79,6 +80,11 @@ namespace ShibikaKhatri22068731CW1.Components.Pages
                     : 1;
 
                 newTransaction.TransactionId = nextTransactionId;
+                // If it's a debt transaction, set IsCleared to false explicitly
+                if (newTransaction.Type == "Debt")
+                {
+                    newTransaction.IsCleared = false;
+                }
                 await TransactionService.SaveTransactionAsync(newTransaction);
                 newTransaction = new Transaction(); // Reset the form
 

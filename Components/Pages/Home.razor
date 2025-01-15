@@ -7,6 +7,19 @@
 
 <MudContainer Style="margin-top: 50px; padding: 20px; background-color: #f9f9f9; border-radius: 8px;">
     <MudText Typo="Typo.h3" Style="color: #4CAF50; font-weight: bold;">Welcome, Shibika</MudText>
+    <MudGrid Class="mb-4">
+        <MudItem xs="12" sm="6" Class="mt-2">
+            <MudText Typo="Typo.h6" Style="font-weight: bold;">Filter by Date Range</MudText>
+            <MudDatePicker @bind-Date="startDate" Label="Start Date" />
+        </MudItem>
+        <MudItem xs="12" sm="6" Class="mt-2">
+            <MudDatePicker @bind-Date="endDate" Label="End Date" />
+        </MudItem>
+        <MudItem xs="12" sm="12">
+            <MudButton OnClick="FilterTransactions" Variant="Variant.Filled" Style="color: white; background-color: #333">Apply Filter</MudButton>
+            <MudButton OnClick="ClearFilter" Variant="Variant.Filled" Style="margin-left: 10px; color: white; background-color: #333">Clear Filter</MudButton>
+        </MudItem>
+    </MudGrid>
 
     @* Charts Layout *@
     <MudGrid Style="margin-top: 30px;" Spacing="3">
@@ -33,7 +46,7 @@
         <MudItem xs="12" sm="6" md="4">
             <MudPaper Elevation="2" Style="padding: 20px; background-color: #e8f5e9;">
                 <MudText Typo="Typo.h6" Style="font-weight: bold;">Total Cash Inflows</MudText>
-                <MudText Style="font-size: 18px; font-weight: bold; color: #388E3C;">$@_totalInflows</MudText>
+                <MudText Typo="Typo.h4" Style="color: #4caf50; font-weight: bold;">@FormatAmount(_totalInflows)</MudText>
             </MudPaper>
         </MudItem>
 
@@ -41,7 +54,7 @@
         <MudItem xs="12" sm="6" md="4">
             <MudPaper Elevation="2" Style="padding: 20px; background-color: #ffebee;">
                 <MudText Typo="Typo.h6" Style="font-weight: bold;">Total Cash Outflows</MudText>
-                <MudText Style="font-size: 18px; font-weight: bold; color: #D32F2F;">$@_totalOutflows</MudText>
+                <MudText Typo="Typo.h4" Style="color: #f44336; font-weight: bold;">@FormatAmount(_totalOutflows)</MudText>
             </MudPaper>
         </MudItem>
 
@@ -49,7 +62,7 @@
         <MudItem xs="12" sm="6" md="4">
             <MudPaper Elevation="2" Style="padding: 20px; background-color: #e3f2fd;">
                 <MudText Typo="Typo.h6" Style="font-weight: bold;">Remaining Balance</MudText>
-                <MudText Style="font-size: 18px; font-weight: bold; color: #1976D2;">$@_balance</MudText>
+                <MudText Typo="Typo.h4" Style="color: #2196f3; font-weight: bold;">@FormatAmount(_balance)</MudText>
             </MudPaper>
         </MudItem>
 
@@ -57,7 +70,7 @@
         <MudItem xs="12" sm="6" md="4">
             <MudPaper Elevation="2" Style="padding: 20px; background-color: #fffde7;">
                 <MudText Typo="Typo.h6" Style="font-weight: bold;">Remaining Debts</MudText>
-                <MudText Style="font-size: 18px; font-weight: bold; color: #FBC02D;">$@_remainingDebt</MudText>
+                <MudText Typo="Typo.h4" Style="color: #ffeb3b; font-weight: bold;">@FormatAmount((decimal)_remainingDebt)</MudText>
             </MudPaper>
         </MudItem>
 
@@ -65,7 +78,7 @@
         <MudItem xs="12" sm="6" md="4">
             <MudPaper Elevation="2" Style="padding: 20px; background-color: #e8f5e9;">
                 <MudText Typo="Typo.h6" Style="font-weight: bold;">Cleared Debts</MudText>
-                <MudText Style="font-size: 18px; font-weight: bold; color: #4CAF50;">$@_totalClearedDebt</MudText>
+                <MudText Typo="Typo.h4" Style="color: #4caf50; font-weight: bold;">@FormatAmount((decimal)_totalClearedDebt)</MudText>
             </MudPaper>
         </MudItem>
 
@@ -73,7 +86,7 @@
         <MudItem xs="12" sm="6" md="4">
             <MudPaper Elevation="2" Style="padding: 20px; background-color: #ede7f6;">
                 <MudText Typo="Typo.h6" Style="font-weight: bold;">Total Debts</MudText>
-                <MudText Style="font-size: 18px; font-weight: bold; color: #607D8B;">$@_totalDebt</MudText>
+                <MudText Typo="Typo.h4" Style="color: #9e9e9e; font-weight: bold;">@FormatAmount((decimal)_totalDebt)</MudText>
             </MudPaper>
         </MudItem>
     </MudGrid>
@@ -90,7 +103,7 @@
                     </HeaderContent>
                     <RowTemplate>
                         <MudTd DataLabel="Date">@context.Date</MudTd>
-                        <MudTd DataLabel="Amount">@context.Amount</MudTd>
+                        <MudTd DataLabel="Amount">@FormatAmount(@context.Amount)</MudTd>
                     </RowTemplate>
                 </MudTable>
             </MudPaper>
@@ -105,7 +118,7 @@
                     </HeaderContent>
                     <RowTemplate>
                         <MudTd DataLabel="Date">@context.Date</MudTd>
-                        <MudTd DataLabel="Amount">@context.Amount</MudTd>
+                        <MudTd DataLabel="Amount">@FormatAmount(@context.Amount)</MudTd>
                     </RowTemplate>
                 </MudTable>
             </MudPaper>
@@ -119,11 +132,23 @@
                         <MudTh>Amount</MudTh>
                     </HeaderContent>
                     <RowTemplate>
-                        <MudTd DataLabel="Date">@context.Date</MudTd>
-                        <MudTd DataLabel="Amount">@context.Amount</MudTd>
+                        <MudTd DataLabel="Date">@context.DueDate</MudTd>
+                        <MudTd DataLabel="Amount">@FormatAmount(@context.Amount)</MudTd>
                     </RowTemplate>
+                    <NoRecordsContent>
+                        <MudText>No pending debts</MudText>
+                    </NoRecordsContent>
                 </MudTable>
             </MudPaper>
         </MudItem>
     </MudGrid>
 </MudContainer>
+
+
+@code {
+
+    private int Index = -1; //default value cannot be 0 -> first selectedindex is 0.
+
+    // Define static data directly
+    private IEnumerable<Transaction> _elements = Enumerable.Empty<Transaction>();
+}

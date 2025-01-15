@@ -2,6 +2,7 @@
 @using ShibikaKhatri22068731CW1.Model
 @using ShibikaKhatri22068731CW1.Services.Interface
 @inject NavigationManager Nav
+@inject IUserService UserService
 @inject ITagService TagService
 @inject ITransactionService TransactionService
 @inject IJSRuntime JS
@@ -13,7 +14,7 @@
         <div class="card h-100 shadow-sm border-0">
             <div class="card-body">
                 <h6 class="card-subtitle mb-2 text-muted">Total Transactions</h6>
-                <h3 class="card-title mb-0"> @_transactionSummary.totalCount</h3>
+                <h3 class="card-title mb-0">@_transactionSummary.TotalTransactionCount</h3>
             </div>
         </div>
     </div>
@@ -21,7 +22,7 @@
         <div class="card h-100 shadow-sm border-0">
             <div class="card-body">
                 <h6 class="card-subtitle mb-2 text-muted">Total Inflows</h6>
-                <h3 class="card-title mb-0 text-success">$ @_transactionSummary.totalInflows</h3>
+                <h3 class="card-title mb-0 text-success">@FormatAmount(_transactionSummary.TotalInflows)</h3>
             </div>
         </div>
     </div>
@@ -29,7 +30,7 @@
         <div class="card h-100 shadow-sm border-0">
             <div class="card-body">
                 <h6 class="card-subtitle mb-2 text-muted">Total Outflows</h6>
-                <h3 class="card-title mb-0 to">$ @_totalOutflows</h3>
+                <h3 class="card-title mb-0" style="color:darkred">@FormatAmount(_transactionSummary.TotalOutflows)</h3>
             </div>
         </div>
     </div>
@@ -37,9 +38,7 @@
         <div class="card h-100 shadow-sm border-0">
             <div class="card-body">
                 <h6 class="card-subtitle mb-2 text-muted">Balance</h6>
-                <h3 class="card-title mb-0 @(_transactionSummary.balance >= 0 ? "text-success" : "text-danger")">
-                    $ @_transactionSummary.balance
-                </h3>
+                <h3 class="card-title mb-0">@FormatAmount(_transactionSummary.Balance)</h3>
             </div>
         </div>
     </div>
@@ -129,7 +128,7 @@
     <tr>
         <td>@transaction.TransactionId</td>
         <td>@transaction.Title</td>
-        <td>@transaction.Amount</td>
+        <td>@FormatAmount(transaction.Amount)</td>
         <td>
             @transaction.Type
         </td>

@@ -338,7 +338,6 @@
 /Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/obj/Debug/net8.0-maccatalyst/maccatalyst-arm64/ShibikaKhatri22068731CW1.pdb
 /Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/obj/Debug/net8.0-maccatalyst/maccatalyst-arm64/ShibikaKhatri22068731CW1.genruntimeconfig.cache
 /Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/obj/Debug/net8.0-maccatalyst/maccatalyst-arm64/ref/ShibikaKhatri22068731CW1.dll
-/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/obj/Debug/net8.0-maccatalyst/maccatalyst-arm64/scopedcss/Components/Pages/DebtEntry.razor.rz.scp.css
 /Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/obj/Debug/net8.0-maccatalyst/maccatalyst-arm64/scopedcss/Components/Pages/DebtsTracker.razor.rz.scp.css
 /Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/obj/Debug/net8.0-maccatalyst/maccatalyst-arm64/resourcestamps/Microsoft.AspNetCore.Authorization.stamp
 /Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/obj/Debug/net8.0-maccatalyst/maccatalyst-arm64/resourcestamps/Microsoft.AspNetCore.Components.stamp

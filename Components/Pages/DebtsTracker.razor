@@ -1,88 +1,195 @@
 @page "/debts-tracker"
 @using ShibikaKhatri22068731CW1.Services.Interface
-@inject IDebtService DebtService
+@inject ITransactionService TransactionService
+@inject IUserService UserService
 @inject NavigationManager NavigationManager
 
 
-<h3>Debt Tracking</h3>
+
 <h3>Debt Tracker</h3>
+<div class="container-fluid p-4">
+
 
 <!-- Summary Cards -->
 
-<div class="container">
-<div class="row">
-    <div class="col-md-4">
-        <div class="card bg-info text-white">
-            <div class="card-body">
-                <h5 class="card-title">Total Debts</h5>
-                <p class="card-text">10</p>
+    <div class="row g-4 mb-4">
+        <!-- Summary Cards -->
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm bg-gradient h-100">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Total Outstanding Debt</h6>
+                    <h3 class="mb-0">@FormatAmount(totalPendingDebt)</h3>
+                    <div class="mt-2 small text-muted">
+                        <span class="@(pendingDebtsCount > 0 ? "text-danger" : "text-success")">
+                            @pendingDebtsCount pending
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card bg-success text-white">
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm h-100">
             <div class="card-body">
-                <h5 class="card-title">Cleared Debts</h5>
-                
-                <p class="card-text">12</p>
+                <h6 class="text-muted mb-2">Total Cleared Debt</h6>
+                <h3 class="mb-0">@FormatAmount(totalClearedDebt)</h3>
+                <div class="mt-2 small text-success">
+                    @clearedDebtsCount debts cleared
+                </div>
+            </div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card bg-warning text-white">
-            <div class="card-body">
-                <h5 class="card-title">Remaining Debts</h5>
-                
-                <p class="card-text">12</p>
+
+
+<div class="col-md-3">
+    <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+            <h6 class="text-muted mb-2">Remaining Debt</h6>
+            <h3 class="mb-0">@FormatAmount(remainingDebt)</h3>
+            <div class="mt-2 small text-muted">
+                Remaining debt to be cleared.
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-3">
+    <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+            <h6 class="text-muted mb-2">Debt Resolution Rate</h6>
+            <h3 class="mb-0">@debtResolutionRate</h3>
+            <div class="mt-2 small text-muted">
+                Based on cleared vs total debts
             </div>
         </div>
     </div>
 </div>
 
-<hr/>
-<button class="btn btn-dark mb-3 text-white" @onclick="NavigateToAddDebtEntry">
-    Add Debt Entry
-</button>
-<h4>Pending Debts</h4>
-
-
-    @if (debts == null || !debts.Any())
-    {
-        <p>No pending debts available.</p>
-    }
-    else
-    {
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Debt ID</th>
-            <th>Source of Debt</th>
-            <th>Amount</th>
-            <th>Due Date</th>
-            <th>Status</th>
-            <th>Cleared From</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var debt in debts)
-        {
-            <tr>
-                <td>@debt.DebtId</td>
-                <td>@debt.SourceOfDebt</td>
-                <td>@debt.Amount</td>
-                <td>@debt.DueDate</td>
-                <td>@debt.Status</td>
-                <td>@debt.ClearedFrom</td>
-                <td>
-                    @if (debt.Status == "Pending")
-                    {
-                        <button class="btn btn-primary" @onclick="() => ClearDebt(debt.DebtId, debt.Amount)">Clear Debt</button>
-                    }
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
-    }
-</div>
+  <!-- Tabs for Pending and Cleared Debts -->
+    <div class="card border-0 shadow-sm">
+        <div class="card-body">
+            <ul class="nav nav-tabs mb-4" role="tablist">
+                <li class="nav-item">
+                    <button class="nav-link @(activeTab == "pending" ? "active" : "")"
+                            @onclick='() => SwitchTab("pending")'>
+                        Pending Debts
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link @(activeTab == "cleared" ? "active" : "")"
+                            @onclick='() => SwitchTab("cleared")'>
+                        Cleared Debts
+                    </button>
+                </li>
+            </ul>
+            @if (activeTab == "pending")
+            {
+                @if (!pendingDebts.Any())
+                {
+                    <div class="text-center py-5">
+                        <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+                        <h5>No Pending Debts</h5>
+                        <p class="text-muted">You're all caught up! No outstanding debts to display.</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Source</th>
+                                    <th>Amount</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var debt in pendingDebts)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-file-invoice-dollar me-2"></i>
+                                                <div>
+                                                    <div>@debt.Title</div>
+                                                    <small class="text-muted">@debt.SourceOfDebt</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>@debt.Amount</td>
+                                        <td>
+                                            <span class="@GetDueDateClass(debt.DueDate)">
+                                                @(debt.DueDate?.ToString("MMM dd, yyyy") ?? "No due date")
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-warning">Pending</span>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-success me-2" 
+                                                    @onclick="() => ClearDebt(debt.TransactionId)">
+                                                Clear Debt
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger"
+                                                    @onclick="() => DeleteDebt(debt.TransactionId)">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            }
+            else
+            {
+                @if (!clearedDebts.Any())
+                {
+                    <div class="text-center py-5">
+                        <i class="fas fa-history fa-3x text-muted mb-3"></i>
+                        <h5>No Cleared Debts</h5>
+                        <p class="text-muted">Your cleared debt history will appear here.</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Source</th>
+                                    <th>Amount</th>
+                                    <th>Cleared Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var debt in clearedDebts)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-check-circle text-success me-2"></i>
+                                                <div>
+                                                    <div>@debt.Title</div>
+                                                    <small class="text-muted">@debt.SourceOfDebt</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>@debt.Amount</td>
+                                        <td>@debt.Date</td>
+                                        <td>
+                                            <span class="badge bg-success">Cleared</span>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            }
+        </div>
+    </div>

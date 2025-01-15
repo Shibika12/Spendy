@@ -14,9 +14,12 @@ namespace ShibikaKhatri22068731CW1.Components.Pages
         private List<Transaction> transactions = new List<Transaction>();
         private List<Transaction> FilteredTransactions = new List<Transaction>();
 
-        private decimal _totalInflows;
-        private decimal _totalOutflows;
-        private (int totalCount, decimal totalInflows, decimal totalOutflows, decimal balance) _transactionSummary;
+        private string PreferredCurrency => UserService.PreferredCurrency;
+
+        // Updated transaction summary fields
+        private (int TotalTransactionCount, decimal TotalInflows, decimal TotalOutflows, decimal NetTransactions,
+            decimal Balance) _transactionSummary;
+
         private readonly List<string> _defaultTags = new List<string>
         {
             "Yearly", "Monthly", "Food", "Drinks", "Clothes", "Gadgets",
@@ -45,6 +48,8 @@ namespace ShibikaKhatri22068731CW1.Components.Pages
             {
                 transactions = await TransactionService.LoadTransactionsAsync();
                 FilteredTransactions = transactions;
+                // Recalculate the transaction summary
+                _transactionSummary = TransactionService.GetTransactionSummary(transactions);
             }
             catch (Exception ex)
             {
@@ -64,37 +69,26 @@ namespace ShibikaKhatri22068731CW1.Components.Pages
 
         private async Task DeleteTransaction(int transactionId)
         {
-            try
-            {
-                // Call the delete service
-                await TransactionService.DeleteTransactionAsync(transactionId);
+            await TransactionService.DeleteTransactionAsync(transactionId);
+            // Clear all filters
+            await ClearFilters();
 
-                // Reload transactions
-                await LoadTransactionsAsync();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error deleting transaction: {ex.Message}");
-            }
+            // Fetch all transactions
+            await LoadTransactionsAsync();
         }
 
         private async Task ApplyFiltersAndSearch()
         {
-            try
+            var filtered = await TransactionService.FilterTransactionsAsync(StartDate, EndDate, FilterType, FilterTags);
+            if (!string.IsNullOrEmpty(SearchTitle))
             {
-                var filtered = await TransactionService.FilterTransactionsAsync(StartDate, EndDate, FilterType, FilterTags);
-
-                if (!string.IsNullOrEmpty(SearchTitle))
-                {
-                    filtered = filtered.Where(t => t.Title.Contains(SearchTitle, StringComparison.OrdinalIgnoreCase)).ToList();
-                }
-
-                FilteredTransactions = filtered;
+                filtered = filtered.Where(t => t.Title.Contains(SearchTitle, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error filtering transactions: {ex.Message}");
-            }
+
+            FilteredTransactions = filtered;
+            // Recalculate the transaction summary with filtered transactions
+            _transactionSummary = TransactionService.GetTransactionSummary(FilteredTransactions);
         }
 
         private async Task ApplySorting()
@@ -118,16 +112,16 @@ namespace ShibikaKhatri22068731CW1.Components.Pages
 
         private async Task ClearFilters()
         {
-            SearchTitle = string.Empty;
-            FilterTags = string.Empty;
-            FilterType = string.Empty;
+            SearchTitle = "";
+            FilterTags = "";
+            FilterType = "";
             StartDate = null;
             EndDate = null;
             SortBy = "Date";
             IsAscending = true;
-
             await LoadTransactionsAsync();
         }
+
         private async Task DeleteTag(string tag)
         {
             var confirmed = await JS.InvokeAsync<bool>("confirm", $"Are you sure you want to delete the tag '{tag}'?");
@@ -137,7 +131,7 @@ namespace ShibikaKhatri22068731CW1.Components.Pages
                 {
                     await TagService.DeleteCustomTagAsync(tag);
                     // Refresh transactions to update tags
-                    FilteredTransactions = await TransactionService.LoadTransactionsAsync();
+                    await LoadTransactionsAsync();
                     StateHasChanged();
                 }
                 catch (Exception ex)
@@ -145,6 +139,27 @@ namespace ShibikaKhatri22068731CW1.Components.Pages
                     await JS.InvokeVoidAsync("alert", $"Error deleting tag: {ex.Message}");
                 }
             }
+        }
+
+        private string GetCurrencySymbol()
+        {
+            switch (PreferredCurrency)
+            {
+                case "USD":
+                    return "$";
+                case "EUR":
+                    return "€";
+                case "NRS":
+                    return "Rs";
+                default:
+                    return "$"; // Default to USD if no currency is selected
+            }
+        }
+
+        // Helper to format amounts with the currency symbol
+        private string FormatAmount(decimal amount)
+        {
+            return $"{GetCurrencySymbol()} {amount:N2}";
         }
     }
 }

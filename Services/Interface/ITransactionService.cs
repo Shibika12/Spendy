@@ -11,8 +11,9 @@ public interface ITransactionService
     Task SaveTransactionAsync(Transaction transaction);
     Task<List<Transaction>> LoadTransactionsAsync();
     Task DeleteTransactionAsync(int transactionId);  // Add this method
-    (decimal totalInflows, decimal totalOutflows, decimal totalDebt, decimal totalClearedDebt, 
-        decimal remainingDebt, decimal balance, bool isSufficientBalance) 
+   
+    (decimal totalInflows, decimal totalOutflows, decimal totalDebt, decimal totalClearedDebt, decimal remainingDebt,
+        decimal balance, bool isSufficientBalance)
         CalculateTransactionSums(List<Transaction> transactions);
 
     (Transaction highestInflow, Transaction lowestInflow, 
@@ -31,4 +32,13 @@ public interface ITransactionService
         GetTransactionExtremes(List<Transaction> transactions, int count = 5);
 
     Task<List<Transaction>> GetTransactionsAsync();
+    
+    (int TotalTransactionCount, decimal NetTransactions, decimal TotalInflows, decimal TotalOutflows, decimal Balance)
+        GetTransactionSummary(List<Transaction> transactions);
+    
+    Task<List<Transaction>> GetPendingDebtsAsync();
+    Task<List<Transaction>> GetClearedDebtsAsync();
+    Task ClearDebtAsync(int transactionId);
+    Task<decimal> GetTotalPendingDebtAmount();
+    Task<List<Transaction>> FilterTransactionsByDateAsync(DateTime? startDate, DateTime? endDate);
 }
