@@ -1,0 +1,290 @@
+/* Custom Container */
+.custom-container {
+    background-color: #f4f7fb;
+}
+
+/* Custom Paper */
+.custom-paper {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: auto;
+    max-width: 600px;
+}
+
+/* Title Styling */
+.custom-title {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #343a40;
+}
+
+/* Input Fields */
+.custom-field {
+    margin-bottom: 15px;
+}
+
+.custom-field .mud-input {
+    border-radius: 8px;
+}
+
+/* Login Button */
+.custom-button {
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 12px;
+    border-radius: 8px;
+    color: white;
+}
+
+/* Error Alert */
+.custom-alert {
+    margin-top: 20px;
+}
+
+/* Custom Image */
+.custom-image {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Overall Form Styling */
+.custom-form {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Title Styling */
+.form-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: #333;
+    text-align: center;
+}
+
+/* Form Group Styling */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+/* Input Fields Styling */
+.form-control {
+    font-size: 1rem;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+/* Validation Message Styling */
+.text-danger {
+    font-size: 0.85rem;
+    color: #dc3545;
+    margin-top: 0.5rem;
+}
+
+/* Button Styling */
+.btn {
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-black {
+    background-color: #333;
+    color: #fff;
+}
+
+.btn-black:hover {
+    background-color: #000;
+    transform: scale(1.05);
+}
+
+.btn-black:active {
+    transform: scale(0.95);
+}
+
+/* Alert Styling */
+.alert {
+    font-size: 0.9rem;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-top: 1rem;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Change the line color inside the custom-line-chart */
+.chart-container .mud-chart-legend {
+    color: #333333; /* Label color in the legend */
+}
+.custom-chart {
+    /* Series colors */
+    --mud-charts-series-1: #4CAF50; /* Green for Credit */
+    --mud-charts-series-2: #F44336; /* Red for Debit */
+    /* Label colors */
+    --mud-charts-labels: #333333;
+    --mud-charts-grid: #666666;
+    /* Tooltip customization */
+    --mud-charts-tooltip-background: rgba(0, 0, 0, 0.8);
+    --mud-charts-tooltip-color: white;
+}
+.date-filter-container {
+    padding: 0.5rem 0;
+}
+.date-filter-header {
+    margin-bottom: 0.5rem;
+}
+.date-filter-title {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+.date-pickers-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.picker-group {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.custom-date-picker {
+    width: 150px !important;
+}
+.custom-date-picker .mud-input {
+    height: 40px;
+}
+.custom-date-picker .mud-input-control {
+    margin: 0;
+}
+.custom-date-picker .mud-input-label {
+    font-size: 0.875rem;
+}
+.button-group {
+    display: flex;
+    gap: 0.5rem;
+}
+.filter-button {
+    height: 36px;
+    min-width: 100px;
+    background-color: #333 !important;
+    color: white !important;
+    font-size: 0.875rem;
+    padding: 0 1rem;
+    border-radius: 4px;
+}
+.filter-button:hover {
+    background-color: #000 !important;
+}
+@media (max-width: 600px) {
+    .picker-group {
+        flex-direction: column;
+        width: 100%;
+    }
+    .custom-date-picker {
+        width: 100% !important;
+    }
+    .button-group {
+        margin-top: 1rem;
+        width: 100%;
+    }
+    .filter-button {
+        flex: 1;
+    }
+}
+@media (max-width: 600px) {
+    .filter-buttons {
+        flex-direction: column;
+    }
+    .filter-button {
+        width: 100%;
+    }
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+    .custom-form {
+        @@ -152,3 +261,63 @@
+        width: 100%;
+    }
+}
+.custom-header {
+    background-color: #f8f9fa !important;
+    color: #4a5568 !important;
+    font-weight: 600 !important;
+    font-size: 0.875rem !important;
+    padding: 12px 16px !important;
+    white-space: nowrap;
+}
+.custom-cell {
+    padding: 12px 16px !important;
+    font-size: 0.875rem;
+    color: #2d3748;
+    border-bottom: 1px solid #f0f0f0 !important;
+}
+.inflow-amount {
+    color: #38a169 !important;
+    font-weight: 600;
+}
+.outflow-amount {
+    color: #e53e3e !important;
+    font-weight: 600;
+}
+.debt-amount {
+    color: #d69e2e !important;
+    font-weight: 600;
+}
+/* Hover effect for rows */
+.custom-table .mud-table-row:hover {
+    background-color: #f7fafc !important;
+}
+/* Loading state */
+.custom-table .mud-progress-circular {
+    color: #4299e1 !important;
+}
+/* No records message */
+.no-records {
+    padding: 2rem;
+    text-align: center;
+    color: #718096;
+    font-style: italic;
+}
+@media (max-width: 600px) {
+    .custom-table {
+        overflow-x: auto;
+    }
+    .custom-cell {
+        white-space: normal;
+        min-width: 120px;
+    }
+}

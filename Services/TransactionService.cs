@@ -1,5 +1,6 @@
 using ShibikaKhatri22068731CW1.Model;
 using ShibikaKhatri22068731CW1.Services.Interface;
+using System.Text;
 
 namespace ShibikaKhatri22068731CW1.Services;
 
@@ -305,9 +306,11 @@ public class TransactionService : ITransactionService
         decimal totalInflows = transactions.Where(t => t.Type == "Credit").Sum(t => t.Amount);
         decimal totalDebts = transactions.Where(t => t.Type == "Debt").Sum(t => t.Amount);
         decimal totalOutflows = transactions.Where(t => t.Type == "Debit").Sum(t => t.Amount);
+        
+        totalInflows += totalDebts;
         // Calculate net transactions and balance
         decimal netTransactions = totalInflows + totalDebts - totalOutflows;
-        decimal balance = totalInflows - totalOutflows;
+        decimal balance = totalInflows + totalDebts - totalOutflows;
         
         return (totalTransactionCount, totalInflows, totalOutflows, netTransactions, balance);
     }
@@ -382,5 +385,52 @@ public class TransactionService : ITransactionService
            (!startDate.HasValue || t.Date >= startDate.Value) &&
            (!endDate.HasValue || t.Date <= endDate.Value) 
        ).ToList();
+   }
+   
+    public async Task<string> ExportToCsvAsync(List<Transaction> transactions)
+   {
+       try
+       {
+           if (transactions == null || !transactions.Any())
+           {
+               throw new InvalidOperationException("No transactions available to export.");
+           }
+           var csvContent = new StringBuilder();
+           // Add header
+           csvContent.AppendLine("TransactionId,Title,Amount,Type,Date,Tags,Note,SourceOfDebt,DueDate,IsCleared");
+           // Add data rows
+           foreach (var transaction in transactions)
+           {
+               string escapedTags = transaction.Tags?.Replace(",", "||") ?? "";
+               string escapedNote = transaction.Note?.Replace(",", "||") ?? "";
+               string escapedSourceOfDebt = transaction.SourceOfDebt?.Replace(",", "||") ?? "";
+               string dueDate = transaction.DueDate.HasValue ? transaction.DueDate.Value.ToString("yyyy-MM-dd") : "";
+               string isCleared = transaction.IsCleared.HasValue ? transaction.IsCleared.Value.ToString() : "";
+               csvContent.AppendLine(
+                   $"{transaction.TransactionId}," +
+                   $"\"{transaction.Title}\"," +
+                   $"{transaction.Amount}," +
+                   $"{transaction.Type}," +
+                   $"{transaction.Date:yyyy-MM-dd}," +
+                   $"\"{escapedTags}\"," +
+                   $"\"{escapedNote}\"," +
+                   $"\"{escapedSourceOfDebt}\"," +
+                   $"{dueDate}," +
+                   $"{isCleared}"
+               );
+           }
+           // Save to a file (optional)
+           var filePath = Path.Combine(
+               Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+               $"transactions_export_{DateTime.Now:yyyyMMdd_HHmmss}.csv"
+           );
+           await File.WriteAllTextAsync(filePath, csvContent.ToString());
+           return filePath; // Return the file path for reference
+       }
+       catch (Exception ex)
+       {
+           Console.WriteLine($"Error exporting transactions to CSV: {ex.Message}");
+           throw;
+       }
    }
 }

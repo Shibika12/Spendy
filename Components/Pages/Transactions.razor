@@ -60,6 +60,7 @@
                     <option value="">All</option>
                     <option value="Credit">Credit</option>
                     <option value="Debit">Debit</option>
+                    <option value="Debt">Debt</option>
                 </select>
             </div>
             <div class="filter-item">
@@ -103,6 +104,9 @@
         </div>
         <button @onclick="ApplySorting" class="btn btn-secondary btn-sm">Sort</button>
         <button @onclick="() => NavigateToAddPage()" class="btn btn-primary btn-sm">Add Transactions</button>
+        <button @onclick="ExportToCsvAsync" class="btn btn-success btn-sm">
+            <i class="fas fa-file-export me-1"></i> Export to CSV
+        </button>
     </div>
 </div>
 <div class="table-container mt-4">

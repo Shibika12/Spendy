@@ -14,7 +14,7 @@ public partial class Home : ComponentBase
     private DateTime? endDate;
     
     private List<Transaction> filteredTransactions = new List<Transaction>();
-    public ChartOptions Options = new ChartOptions();
+    public string[] Colors { get; set; }
     public List<ChartSeries> Series { get; set; } = new List<ChartSeries>();
     public string[] XAxisLabels { get; set; } = Array.Empty<string>();
     private bool _hidePosition;

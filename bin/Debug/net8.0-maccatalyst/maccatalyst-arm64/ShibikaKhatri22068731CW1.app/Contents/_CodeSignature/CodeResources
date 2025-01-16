@@ -58,7 +58,7 @@
 		</data>
 		<key>Resources/wwwroot/css/app.css</key>
 		<data>
-		rXvEmeXbFBzc9ambD4ZPAQy/0WM=
+		orqh+ZjeYciJU4hh//vhdYA7r+8=
 		</data>
 		<key>Resources/wwwroot/css/bootstrap/bootstrap.min.css</key>
 		<data>
@@ -67,6 +67,10 @@
 		<key>Resources/wwwroot/css/bootstrap/bootstrap.min.css.map</key>
 		<data>
 		q/MDqBoEj02v9tdu3AjM/ZeKQLQ=
+		</data>
+		<key>Resources/wwwroot/css/custom-style.css</key>
+		<data>
+		nL1HcNfm5ZpbPkf/H8oT6FtaFYg=
 		</data>
 		<key>Resources/wwwroot/favicon.png</key>
 		<data>
@@ -370,14 +374,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			tBIwuAEgk+OKrzykSt4RDlce3my2UrlxIL5HhMiYXFI=
+			c2WntXvCy6hWCWDmwikf4sHqQFrBQpoYfftoVqONnK8=
 			</data>
 		</dict>
 		<key>MonoBundle/ShibikaKhatri22068731CW1.pdb</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4g7xuXBlSbO4yVEGDOtL4/8zAlveS/2SDgm7mn/l3fg=
+			2pt9H+Yelzu2Dz+vKyqU1llHOifAH3JJkPybUA0wWzY=
 			</data>
 		</dict>
 		<key>MonoBundle/System.AppContext.dll</key>
@@ -1889,7 +1893,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			BTLF4V77kY4eVi/KYkiX7sN3qti7iYglIqK0mhDBHa4=
+			qSlJua+QUYAjT0ZjY4LJCPSDnWMJsZEiZnHUnlFkdQo=
 			</data>
 		</dict>
 		<key>Resources/wwwroot/css/bootstrap/bootstrap.min.css</key>
@@ -1904,6 +1908,13 @@
 			<key>hash2</key>
 			<data>
 			gBwg2tmA0Ci2u54gMF1jNCVku6vznarkLS6D76htNNQ=
+			</data>
+		</dict>
+		<key>Resources/wwwroot/css/custom-style.css</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			T/wuzaATgvmrJJc8ocRvfn9CgEtYZ53ldApxLQ76pTQ=
 			</data>
 		</dict>
 		<key>Resources/wwwroot/favicon.png</key>

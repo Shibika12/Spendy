@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets/css/bootstrap/bootstrap.min.css.map"
     },
     {
+      "Id": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/wwwroot/css/custom-style.css",
+      "PackagePath": "staticwebassets/css/custom-style.css"
+    },
+    {
       "Id": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/wwwroot/favicon.png",
       "PackagePath": "staticwebassets/favicon.png"
     },

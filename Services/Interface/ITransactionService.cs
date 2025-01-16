@@ -41,4 +41,6 @@ public interface ITransactionService
     Task ClearDebtAsync(int transactionId);
     Task<decimal> GetTotalPendingDebtAmount();
     Task<List<Transaction>> FilterTransactionsByDateAsync(DateTime? startDate, DateTime? endDate);
+    
+    Task<string> ExportToCsvAsync(List<Transaction> transactions);
 }

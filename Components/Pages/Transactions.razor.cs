@@ -161,5 +161,26 @@ namespace ShibikaKhatri22068731CW1.Components.Pages
         {
             return $"{GetCurrencySymbol()} {amount:N2}";
         }
+        private async Task ExportToCsvAsync()
+        {
+            try
+            {
+                var transactions = await TransactionService.GetTransactionsAsync();
+                if (transactions.Any())
+                {
+                    var filePath = await TransactionService.ExportToCsvAsync(transactions);
+                    await JS.InvokeVoidAsync("alert", $"Transactions exported to: {filePath}");
+                }
+                else
+                {
+                    await JS.InvokeVoidAsync("alert", "No transactions to export.");
+                }
+            }
+            catch (Exception ex)
+            {
+                await JS.InvokeVoidAsync("alert", $"Error exporting transactions: {ex.Message}");
+            }
+        }
     }
+    
 }
