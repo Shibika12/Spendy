@@ -6,91 +6,125 @@
 @inject ITransactionService TransactionService
 
 <MudContainer Style="margin-top: 50px; padding: 20px; background-color: #f9f9f9; border-radius: 8px;">
-    <MudText Typo="Typo.h3" Style="color: #4CAF50; font-weight: bold;">Welcome, Shibika</MudText>
-    <MudGrid Class="date-filter-container mb-4">
-        <MudItem xs="12" Class="date-filter-header">
-            <MudText Typo="Typo.h6" Class="date-filter-title">Filter by Date Range</MudText>
+    @* Header Section *@
+    <MudText Typo="Typo.h3" Style="color: slategrey; font-weight: bold;">Welcome, Shibika</MudText>
+    
+    @* Financial Summary Section *@
+    <MudText Typo="Typo.h4" Style="color: midnightblue; align-content: center;margin-top: 25px; font-weight: bold;">Financial Summary</MudText>
+    <MudGrid Style="margin-top: 20px;" Spacing="3">
+
+        @* Total Cash Inflows Card *@
+        <MudItem xs="12" sm="6" md="4">
+            <MudPaper Elevation="2" Style="padding: 20px;">
+                <!-- Display total inflows -->
+                <MudText Typo="Typo.h6" Style="font-weight: bold;">Total Cash Inflows</MudText>
+                <MudText Typo="Typo.h4" Style="color: #4caf50; font-weight: bold;">@FormatAmount(_totalInflows)</MudText>
+            </MudPaper>
         </MudItem>
-        <MudItem xs="12" Class="date-pickers-row">
-            <div class="picker-group">
-                <MudDatePicker @bind-Date="startDate"
-                               Label="Start Date"
-                               Class="custom-date-picker"
-                               DisableToolbar="true" />
-                <MudDatePicker @bind-Date="endDate"
-                               Label="End Date"
-                               Class="custom-date-picker"
-                               DisableToolbar="true" />
-            </div>
-            <div class="button-group">
-                <MudButton OnClick="FilterTransactions"
-                           Variant="Variant.Filled"
-                           Class="filter-button">
-                    Apply Filter
-                </MudButton>
-                <MudButton OnClick="ClearFilter"
-                           Variant="Variant.Filled"
-                           Class="filter-button">
-                    Clear Filter
-                </MudButton>
-            </div>
+
+        @* Total Cash Outflows Card *@
+        <MudItem xs="12" sm="6" md="4">
+            <MudPaper Elevation="2" Style="padding: 20px;">
+                <!-- Display total outflows -->
+                <MudText Typo="Typo.h6" Style="font-weight: bold;">Total Cash Outflows</MudText>
+                <MudText Typo="Typo.h4" Style="color: #f44336; font-weight: bold;">@FormatAmount(_totalOutflows)</MudText>
+            </MudPaper>
+        </MudItem>
+
+        @* Remaining Balance Card *@
+        <MudItem xs="12" sm="6" md="4">
+            <MudPaper Elevation="2" Style="padding: 20px;">
+                <!-- Display remaining balance -->
+                <MudText Typo="Typo.h6" Style="font-weight: bold;">Remaining Balance</MudText>
+                <MudText Typo="Typo.h4" Style="color: #2196f3; font-weight: bold;">@FormatAmount(_balance)</MudText>
+            </MudPaper>
+        </MudItem>
+
+        @* Remaining Debts Card *@
+        <MudItem xs="12" sm="6" md="4">
+            <MudPaper Elevation="2" Style="padding: 20px;">
+                <!-- Display remaining debts -->
+                <MudText Typo="Typo.h6" Style="font-weight: bold;">Remaining Debts</MudText>
+                <MudText Typo="Typo.h4" Style="color: darkslateblue; font-weight: bold;">@FormatAmount((decimal)_remainingDebt)</MudText>
+            </MudPaper>
+        </MudItem>
+
+        @* Cleared Debts Card *@
+        <MudItem xs="12" sm="6" md="4">
+            <MudPaper Elevation="2" Style="padding: 20px;">
+                <!-- Display cleared debts -->
+                <MudText Typo="Typo.h6" Style="font-weight: bold;">Cleared Debts</MudText>
+                <MudText Typo="Typo.h4" Style="color: #4caf50; font-weight: bold;">@FormatAmount((decimal)_totalClearedDebt)</MudText>
+            </MudPaper>
+        </MudItem>
+
+        @* Total Debts Card *@
+        <MudItem xs="12" sm="6" md="4">
+            <MudPaper Elevation="2" Style="padding: 20px;">
+                <!-- Display total debts -->
+                <MudText Typo="Typo.h6" Style="font-weight: bold;">Total Debts</MudText>
+                <MudText Typo="Typo.h4" Style="color: #3a0647; font-weight: bold;">@FormatAmount((decimal)_totalDebt)</MudText>
+            </MudPaper>
         </MudItem>
     </MudGrid>
 
     @* Charts Section *@
-    <MudGrid Class="mb-4">
-        <!-- Cashflow Trend -->
+    <MudGrid Class="mb-4" Style="margin-top: 20px">
+        <!-- Cashflow Trend Chart -->
         <MudItem xs="12" sm="6">
-            <MudPaper Elevation="4" Class="pa-4"
-                      Style="height: 500px; background-color: #f9f9f9; border-radius: 10px; border: 1px solid #ddd;">
-                <MudText Typo="Typo.h6" Class="mb-2"
-                         Style="font-weight: bold; color: #444;">Cashflow Trend</MudText>
-                <MudChart Class="custom-line-chart" ChartType="ChartType.Line"
-                          ChartSeries="@Series"
-                          @bind-SelectedIndex="SelectedChartIndex"
-                          XAxisLabels="@XAxisLabels"
-                          Width="100%"
-                          Height="350px"
-                          Style="background-color: #e3f2fd; border-radius: 8px; padding: 10px;" />
+            <MudPaper Elevation="4" Class="pa-4" Style="height: 500px; background-color: #f9f9f9; border-radius: 10px; border: 1px solid #ddd;">
+                <MudText Typo="Typo.h6" Class="mb-2" Style="font-weight: bold; color: #444;">Cashflow Trend</MudText>
+                <MudChart Class="custom-line-chart" ChartType="ChartType.Line" ChartSeries="@Series" @bind-SelectedIndex="SelectedChartIndex" XAxisLabels="@XAxisLabels" Width="100%" Height="350px" Style="background-color: #e3f2fd; border-radius: 8px; padding: 10px;" />
             </MudPaper>
         </MudItem>
-        <!-- Expenses Breakdown -->
+
+        <!-- Expenses Breakdown Chart -->
         <MudItem xs="12" sm="6">
-            <MudPaper Elevation="4" Class="pa-4"
-                      Style="height: 500px; background-color: #f9f9f9; border-radius: 10px; border: 1px solid #ddd;">
-                <MudText Typo="Typo.h6" Class="mb-2"
-                         Style="font-weight: bold; color: #444;">Expenses Breakdown</MudText>
-                <MudChart Class="custom-bar-chart" ChartType="ChartType.Bar"
-                          ChartSeries="@Series"
-                          @bind-SelectedIndex="SelectedChartIndex"
-                          XAxisLabels="@XAxisLabels"
-                          Width="100%"
-                          Height="350px"
-                          Style="background-color: #ffebee; border-radius: 8px; padding: 10px;" />
+            <MudPaper Elevation="4" Class="pa-4" Style="height: 500px; background-color: #f9f9f9; border-radius: 10px; border: 1px solid #ddd;">
+                <MudText Typo="Typo.h6" Class="mb-2" Style="font-weight: bold; color: #444;">Expenses Breakdown</MudText>
+                <MudChart Class="custom-bar-chart" ChartType="ChartType.Bar" ChartSeries="@Series" @bind-SelectedIndex="SelectedChartIndex" XAxisLabels="@XAxisLabels" Width="100%" Height="350px" Style="background-color: #ffebee; border-radius: 8px; padding: 10px;" />
             </MudPaper>
         </MudItem>
     </MudGrid>
 
+    @* Date Filter Section *@
+    <MudGrid Class="date-filter-container mb-4" Style="margin-top: 20px">
+        <MudItem xs="12" Class="date-filter-header">
+            <!-- Header for date range filter -->
+            <MudText Typo="Typo.h6" Class="date-filter-title">Filter by Date Range</MudText>
+        </MudItem>
+        <MudItem xs="12" Class="date-pickers-row">
+            <div class="picker-group">
+                <!-- Start date picker -->
+                <MudDatePicker @bind-Date="startDate" Label="Start Date" Class="custom-date-picker" DisableToolbar="true" />
+                <!-- End date picker -->
+                <MudDatePicker @bind-Date="endDate" Label="End Date" Class="custom-date-picker" DisableToolbar="true" />
+            </div>
+            <div class="button-group">
+                <!-- Filter apply button -->
+                <MudButton OnClick="FilterTransactions" Variant="Variant.Filled" Class="filter-button">Apply Filter</MudButton>
+                <!-- Filter clear button -->
+                <MudButton OnClick="ClearFilter" Variant="Variant.Filled" Class="filter-button">Clear Filter</MudButton>
+            </div>
+        </MudItem>
+    </MudGrid>
+
     @* Tables Section *@
-    <MudGrid Class="dashboard-tables">
-        @* Top 5 Highest Inflows *@
+    <MudGrid Class="dashboard-tables" Style="margin-top: 20px">
+        <!-- Top 5 Highest Inflows Table -->
         <MudItem xs="12" sm="4">
             <MudPaper Elevation="4" Class="custom-table-card">
                 <div class="table-header">
                     <MudText Typo="Typo.h6">Top 5 Highest Inflows</MudText>
                 </div>
-                <MudTable Items="@TopInflows"
-                          Class="custom-table"
-                          Hover="true"
-                          Breakpoint="Breakpoint.Sm"
-                          Loading="@_loading"
-                          LoadingProgressColor="Color.Info">
+                <MudTable Items="@TopInflows" Class="custom-table" Hover="true" Breakpoint="Breakpoint.Sm" Loading="@_loading" LoadingProgressColor="Color.Info">
                     <HeaderContent>
                         <MudTh Class="custom-header">Date</MudTh>
                         <MudTh Class="custom-header">Title</MudTh>
                         <MudTh Class="custom-header">Amount</MudTh>
                     </HeaderContent>
                     <RowTemplate>
+                        <!-- Bind table data for inflows -->
                         <MudTd DataLabel="Date" Class="custom-cell">@context.Date</MudTd>
                         <MudTd DataLabel="Title" Class="custom-cell">@context.Title</MudTd>
                         <MudTd DataLabel="Amount" Class="custom-cell inflow-amount">@FormatAmount(@context.Amount)</MudTd>
@@ -98,24 +132,21 @@
                 </MudTable>
             </MudPaper>
         </MudItem>
-        @* Top 5 Highest Outflows *@
+
+        <!-- Top 5 Highest Outflows Table -->
         <MudItem xs="12" sm="4">
             <MudPaper Elevation="4" Class="custom-table-card">
                 <div class="table-header">
                     <MudText Typo="Typo.h6">Top 5 Highest Outflows</MudText>
                 </div>
-                <MudTable Items="@TopOutflows"
-                          Class="custom-table"
-                          Hover="true"
-                          Breakpoint="Breakpoint.Sm"
-                          Loading="@_loading"
-                          LoadingProgressColor="Color.Info">
+                <MudTable Items="@TopOutflows" Class="custom-table" Hover="true" Breakpoint="Breakpoint.Sm" Loading="@_loading" LoadingProgressColor="Color.Info">
                     <HeaderContent>
                         <MudTh Class="custom-header">Date</MudTh>
                         <MudTh Class="custom-header">Title</MudTh>
                         <MudTh Class="custom-header">Amount</MudTh>
                     </HeaderContent>
                     <RowTemplate>
+                        <!-- Bind table data for outflows -->
                         <MudTd DataLabel="Date" Class="custom-cell">@context.Date</MudTd>
                         <MudTd DataLabel="Title" Class="custom-cell">@context.Title</MudTd>
                         <MudTd DataLabel="Amount" Class="custom-cell outflow-amount">@FormatAmount(@context.Amount)</MudTd>
@@ -123,27 +154,25 @@
                 </MudTable>
             </MudPaper>
         </MudItem>
-        @* Pending Debts Table *@
+
+        <!-- Pending Debts Table -->
         <MudItem xs="12" sm="4">
             <MudPaper Elevation="4" Class="custom-table-card">
                 <div class="table-header">
                     <MudText Typo="Typo.h6">Pending Debts</MudText>
                 </div>
-                <MudTable Items="@PendingDebts"
-                          Class="custom-table"
-                          Hover="true"
-                          Breakpoint="Breakpoint.Sm"
-                          Loading="@_loading"
-                          LoadingProgressColor="Color.Info">
+                <MudTable Items="@PendingDebts" Class="custom-table" Hover="true" Breakpoint="Breakpoint.Sm" Loading="@_loading" LoadingProgressColor="Color.Info">
                     <HeaderContent>
                         <MudTh Class="custom-header">Date</MudTh>
                         <MudTh Class="custom-header">Amount</MudTh>
                     </HeaderContent>
                     <RowTemplate>
+                        <!-- Bind table data for pending debts -->
                         <MudTd DataLabel="Date" Class="custom-cell">@context.DueDate</MudTd>
                         <MudTd DataLabel="Amount" Class="custom-cell debt-amount">@FormatAmount(@context.Amount)</MudTd>
                     </RowTemplate>
                     <NoRecordsContent>
+                        <!-- Message for no pending debts -->
                         <div class="no-records">
                             <MudText>No pending debts</MudText>
                         </div>
@@ -153,6 +182,7 @@
         </MudItem>
     </MudGrid>
 </MudContainer>
+
 
 @code {
     private int SelectedChartIndex = 0; // Default selected index

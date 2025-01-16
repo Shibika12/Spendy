@@ -179,121 +179,555 @@ main[b-t6kwjr8yjk] {
     }
 }
 /* /Components/Pages/AddTransaction.razor.rz.scp.css */
-/* Card layout styling */
-.form-container[b-fbrcesbcyu] {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 30px;
-    background: linear-gradient(135deg, #DBF9F0, #f0dbf9); /* Gradient background */
-    border-radius: 15px;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-    color: #fff; /* White text to contrast with gradient */
+.add-transaction-container[b-fbrcesbcyu] {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-/* Title styling */
-.form-title[b-fbrcesbcyu] {
-    font-size: 28px;
+.page-header[b-fbrcesbcyu] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.page-title[b-fbrcesbcyu] {
+    color: var(--primary-color);
+    font-size: 1.8rem;
     font-weight: 600;
-    text-align: center;
-    margin-bottom: 20px;
-    color: #f6f5f5;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    margin: 0;
 }
 
-/* Basic form layout */
-.transaction-form[b-fbrcesbcyu] {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.form-section[b-fbrcesbcyu] {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
 }
 
-/* Styling for each form group */
 .form-group[b-fbrcesbcyu] {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
 }
 
-/* Label styling */
 .form-group label[b-fbrcesbcyu] {
-    font-size: 1rem;
-    color: #fff;
-    margin-bottom: 8px;
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
     font-weight: 500;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-/* Input styling */
-.form-group input[b-fbrcesbcyu],
-.form-group select[b-fbrcesbcyu],
-.form-group textarea[b-fbrcesbcyu] {
-    padding: 12px;
-    border: 1px solid #ddd;
+.form-control[b-fbrcesbcyu] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     font-size: 1rem;
-    color: #333;
-    background-color: #f3f3f3;
+    transition: all 0.2s;
+}
+
+.form-control:focus[b-fbrcesbcyu] {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
     outline: none;
-    transition: all 0.3s ease;
 }
 
-/* Focus effect on input fields */
-.form-group input:focus[b-fbrcesbcyu],
-.form-group select:focus[b-fbrcesbcyu],
-.form-group textarea:focus[b-fbrcesbcyu] {
-    border-color: #2575fc;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(37, 117, 252, 0.5);
+/* Tags Section */
+.tags-section[b-fbrcesbcyu] {
+    background: var(--background-color);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
 }
 
-/* Textarea specific styling */
-.form-group textarea[b-fbrcesbcyu] {
-    resize: vertical;
+.tags-title[b-fbrcesbcyu] {
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
 }
 
-/* Button styling */
-.form-actions button[b-fbrcesbcyu] {
-    padding: 20px 20px;
-    background-color: #5781e3;
+.tags-container[b-fbrcesbcyu] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.tag-item[b-fbrcesbcyu] {
+    display: inline-flex;
+    align-items: center;
+    background: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s;
+}
+
+.tag-item:hover[b-fbrcesbcyu] {
+    border-color: var(--secondary-color);
+    transform: translateY(-1px);
+}
+
+.tag-item input[type="checkbox"][b-fbrcesbcyu] {
+    margin-right: 0.5rem;
+}
+
+/* Action Buttons */
+.form-actions[b-fbrcesbcyu] {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--border-color);
+}
+
+.btn[b-fbrcesbcyu] {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-primary[b-fbrcesbcyu] {
+    background: var(--secondary-color);
     color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 4px 8px rgba(37, 117, 252, 0.2);
 }
 
-/* Hover effect for button */
-.form-actions button:hover[b-fbrcesbcyu] {
-    background-color: #6a11cb;
-    transform: translateY(-3px);
+.btn-primary:hover[b-fbrcesbcyu] {
+    background: #2980b9;
+    transform: translateY(-1px);
 }
 
-/* Error message styling */
-.alert[b-fbrcesbcyu] {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    font-size: 1rem;
+.btn-outline[b-fbrcesbcyu] {
+    background: transparent;
+    border: 2px solid var(--border-color);
+    color: var(--text-secondary);
 }
 
-/* Placeholder text styling */
-.form-group input[b-fbrcesbcyu]::placeholder,
-.form-group textarea[b-fbrcesbcyu]::placeholder {
-    color: #888;
+.btn-outline:hover[b-fbrcesbcyu] {
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
 }
 
-/* Additional animations for form elements */
-.form-group input[b-fbrcesbcyu],
-.form-group select[b-fbrcesbcyu],
-.form-group textarea[b-fbrcesbcyu] {
-    transition: all 0.3s ease-out;
+/* Responsive Design */
+@media (max-width: 768px) {
+    .add-transaction-container[b-fbrcesbcyu] {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+
+    .form-section[b-fbrcesbcyu] {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions[b-fbrcesbcyu] {
+        flex-direction: column;
+    }
+
+    .btn[b-fbrcesbcyu] {
+        width: 100%;
+        justify-content: center;
+    }
 }
 /* /Components/Pages/DebtsTracker.razor.rz.scp.css */
+.container-fluid[b-3ya65sf18j] {
+    background-color: var(--background-color);
+    min-height: 100vh;
+}
+
+.page-header[b-3ya65sf18j] {
+    margin-bottom: 2rem;
+}
+
+.page-title[b-3ya65sf18j] {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Summary Cards */
+.summary-cards[b-3ya65sf18j] {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.summary-card[b-3ya65sf18j] {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+}
+
+.summary-card:hover[b-3ya65sf18j] {
+    transform: translateY(-2px);
+}
+
+.card-header[b-3ya65sf18j] {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.card-value[b-3ya65sf18j] {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.pending-debt .card-value[b-3ya65sf18j] {
+    color: var(--danger-color);
+}
+
+.cleared-debt .card-value[b-3ya65sf18j] {
+    color: var(--accent-color);
+}
+
+.card-subtitle[b-3ya65sf18j] {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+/* Debt Table Card */
+.debt-table-card[b-3ya65sf18j] {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.card-header-tabs[b-3ya65sf18j] {
+    margin: -0.5rem 0;
+    border-bottom: none;
+}
+
+.nav-link[b-3ya65sf18j] {
+    color: var(--text-secondary);
+    padding: 1rem 1.5rem;
+    border: none;
+    border-bottom: 2px solid transparent;
+}
+
+.nav-link.active[b-3ya65sf18j] {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+.card-body[b-3ya65sf18j] {
+    padding: 1.5rem;
+}
+
+/* Table Styles */
+.table[b-3ya65sf18j] {
+    margin-bottom: 0;
+}
+
+.table th[b-3ya65sf18j] {
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    padding: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.table td[b-3ya65sf18j] {
+    padding: 1rem;
+    vertical-align: middle;
+}
+
+.debt-info[b-3ya65sf18j] {
+    display: flex;
+    flex-direction: column;
+}
+
+.debt-title[b-3ya65sf18j] {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.debt-source[b-3ya65sf18j] {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.status-badge[b-3ya65sf18j] {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.status-pending[b-3ya65sf18j] {
+    background-color: #FEF2F2;
+    color: var(--danger-color);
+}
+
+.status-cleared[b-3ya65sf18j] {
+    background-color: #F0FDF4;
+    color: var(--accent-color);
+}
+
+/* Action Buttons */
+.action-btn[b-3ya65sf18j] {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    padding: 0.25rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin: 0 0.25rem;
+}
+
+.action-btn:hover[b-3ya65sf18j] {
+    transform: scale(1.1);
+}
+
+.edit-btn:hover[b-3ya65sf18j] {
+    color: var(--secondary-color);
+}
+
+.check-btn:hover[b-3ya65sf18j] {
+    color: var(--accent-color);
+}
+
+/* Empty State */
+.empty-state[b-3ya65sf18j] {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+}
+
+.empty-state-icon[b-3ya65sf18j] {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .summary-cards[b-3ya65sf18j] {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-link[b-3ya65sf18j] {
+        padding: 0.75rem 1rem;
+    }
+}
 /* /Components/Pages/EditTransaction.razor.rz.scp.css */
+.edit-transaction-container[b-g7pr4ecnjx] {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.page-header[b-g7pr4ecnjx] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.page-title[b-g7pr4ecnjx] {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.form-section[b-g7pr4ecnjx] {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.form-group[b-g7pr4ecnjx] {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label[b-g7pr4ecnjx] {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-control[b-g7pr4ecnjx] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.form-control:focus[b-g7pr4ecnjx] {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    outline: none;
+}
+
+/* Tags Section */
+.tags-section[b-g7pr4ecnjx] {
+    background: var(--background-color);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+.tags-title[b-g7pr4ecnjx] {
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.tags-container[b-g7pr4ecnjx] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.tag-item[b-g7pr4ecnjx] {
+    display: inline-flex;
+    align-items: center;
+    background: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s;
+}
+
+.tag-item:hover[b-g7pr4ecnjx] {
+    border-color: var(--secondary-color);
+    transform: translateY(-1px);
+}
+
+.tag-item input[type="checkbox"][b-g7pr4ecnjx] {
+    margin-right: 0.5rem;
+}
+
+/* Action Buttons */
+.form-actions[b-g7pr4ecnjx] {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--border-color);
+}
+
+.btn[b-g7pr4ecnjx] {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-primary[b-g7pr4ecnjx] {
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover[b-g7pr4ecnjx] {
+    background: #2980b9;
+    transform: translateY(-1px);
+}
+
+.btn-outline[b-g7pr4ecnjx] {
+    background: transparent;
+    border: 2px solid var(--border-color);
+    color: var(--text-secondary);
+}
+
+.btn-outline:hover[b-g7pr4ecnjx] {
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+}
+
+/* Loading State */
+.loading-overlay[b-g7pr4ecnjx] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.loading-spinner[b-g7pr4ecnjx] {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--secondary-color);
+    border-radius: 50%;
+    animation: spin-b-g7pr4ecnjx 1s linear infinite;
+}
+
+@keyframes spin-b-g7pr4ecnjx {
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .edit-transaction-container[b-g7pr4ecnjx] {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+
+    .form-section[b-g7pr4ecnjx] {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions[b-g7pr4ecnjx] {
+        flex-direction: column;
+    }
+
+    .btn[b-g7pr4ecnjx] {
+        width: 100%;
+        justify-content: center;
+    }
+}
 /* /Components/Pages/Home.razor.rz.scp.css */
 /* /Components/Pages/Index.razor.rz.scp.css */
 /* /Components/Pages/Login.razor.rz.scp.css */

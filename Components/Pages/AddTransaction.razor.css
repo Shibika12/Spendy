@@ -1,113 +1,165 @@
-/* Card layout styling */
-.form-container {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 30px;
-    background: linear-gradient(135deg, #DBF9F0, #f0dbf9); /* Gradient background */
-    border-radius: 15px;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-    color: #fff; /* White text to contrast with gradient */
+.add-transaction-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-/* Title styling */
-.form-title {
-    font-size: 28px;
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.page-title {
+    color: var(--primary-color);
+    font-size: 1.8rem;
     font-weight: 600;
-    text-align: center;
-    margin-bottom: 20px;
-    color: #f6f5f5;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    margin: 0;
 }
 
-/* Basic form layout */
-.transaction-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.form-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
 }
 
-/* Styling for each form group */
 .form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
 }
 
-/* Label styling */
 .form-group label {
-    font-size: 1rem;
-    color: #fff;
-    margin-bottom: 8px;
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
     font-weight: 500;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-/* Input styling */
-.form-group input,
-.form-group select,
-.form-group textarea {
-    padding: 12px;
-    border: 1px solid #ddd;
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     font-size: 1rem;
-    color: #333;
-    background-color: #f3f3f3;
+    transition: all 0.2s;
+}
+
+.form-control:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
     outline: none;
-    transition: all 0.3s ease;
 }
 
-/* Focus effect on input fields */
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    border-color: #2575fc;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(37, 117, 252, 0.5);
+/* Tags Section */
+.tags-section {
+    background: var(--background-color);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
 }
 
-/* Textarea specific styling */
-.form-group textarea {
-    resize: vertical;
+.tags-title {
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
 }
 
-/* Button styling */
-.form-actions button {
-    padding: 20px 20px;
-    background-color: #5781e3;
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.tag-item {
+    display: inline-flex;
+    align-items: center;
+    background: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s;
+}
+
+.tag-item:hover {
+    border-color: var(--secondary-color);
+    transform: translateY(-1px);
+}
+
+.tag-item input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+/* Action Buttons */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--border-color);
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-primary {
+    background: var(--secondary-color);
     color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 4px 8px rgba(37, 117, 252, 0.2);
 }
 
-/* Hover effect for button */
-.form-actions button:hover {
-    background-color: #6a11cb;
-    transform: translateY(-3px);
+.btn-primary:hover {
+    background: #2980b9;
+    transform: translateY(-1px);
 }
 
-/* Error message styling */
-.alert {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    font-size: 1rem;
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--border-color);
+    color: var(--text-secondary);
 }
 
-/* Placeholder text styling */
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-    color: #888;
+.btn-outline:hover {
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
 }
 
-/* Additional animations for form elements */
-.form-group input,
-.form-group select,
-.form-group textarea {
-    transition: all 0.3s ease-out;
+/* Responsive Design */
+@media (max-width: 768px) {
+    .add-transaction-container {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+
+    .form-section {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
 }

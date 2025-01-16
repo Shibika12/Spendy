@@ -7,156 +7,189 @@
 @inject ITransactionService TransactionService
 @inject IJSRuntime JS
 
-<div class="container mt-2">
-<h3>Transactions</h3>
-<div class="row mb-4">
-    <div class="col-md-3 mb-3">
-        <div class="card h-100 shadow-sm border-0">
-            <div class="card-body">
-                <h6 class="card-subtitle mb-2 text-muted">Total Transactions</h6>
-                <h3 class="card-title mb-0">@_transactionSummary.TotalTransactionCount</h3>
-            </div>
+<!-- Page container -->
+<div class="container-fluid p-4">
+    <!-- Header section -->
+    <div class="page-header">
+        <h1 class="page-title">Transactions</h1>
+        <div class="page-actions">
+            <!-- Button to navigate to add transaction page -->
+            <button @onclick="() => NavigateToAddPage()" class="btn btn-primary">
+                ➕ Add Transaction
+            </button>
+            <!-- Button to export transactions to CSV -->
+            <button @onclick="ExportToCsvAsync" class="btn btn-secondary">
+                📊 Export CSV
+            </button>
         </div>
     </div>
-    <div class="col-md-3 mb-3">
-        <div class="card h-100 shadow-sm border-0">
-            <div class="card-body">
-                <h6 class="card-subtitle mb-2 text-muted">Total Inflows</h6>
-                <h3 class="card-title mb-0 text-success">@FormatAmount(_transactionSummary.TotalInflows)</h3>
-            </div>
+
+    <!-- Summary statistics grid -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-label">Total Transactions</div>
+            <div class="stat-value">@_transactionSummary.TotalTransactionCount</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Total Inflows</div>
+            <!-- Styling applied conditionally based on the type -->
+            <div class="stat-value inflow">@FormatAmount(_transactionSummary.TotalInflows)</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Total Outflows</div>
+            <div class="stat-value outflow">@FormatAmount(_transactionSummary.TotalOutflows)</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Balance</div>
+            <div class="stat-value">@FormatAmount(_transactionSummary.Balance)</div>
         </div>
     </div>
-    <div class="col-md-3 mb-3">
-        <div class="card h-100 shadow-sm border-0">
-            <div class="card-body">
-                <h6 class="card-subtitle mb-2 text-muted">Total Outflows</h6>
-                <h3 class="card-title mb-0" style="color:darkred">@FormatAmount(_transactionSummary.TotalOutflows)</h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3 mb-3">
-        <div class="card h-100 shadow-sm border-0">
-            <div class="card-body">
-                <h6 class="card-subtitle mb-2 text-muted">Balance</h6>
-                <h3 class="card-title mb-0">@FormatAmount(_transactionSummary.Balance)</h3>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="compact-filter-container">
-    <div class="filter-section">
-        <div class="filter-row">
-            <div class="filter-item">
-                <label for="searchTitle">Title:</label>
-                <input type="text" id="searchTitle" @bind="SearchTitle" class="compact-input" placeholder="Search title"/>
-            </div>
-            <div class="filter-item">
-                <label for="filterTags">Tags:</label>
-                <input type="text" id="filterTags" @bind="FilterTags" class="compact-input" placeholder="Filter tags"/>
-            </div>
-            <div class="filter-item">
-                <label for="filterType">Type:</label>
-                <select id="filterType" @bind="FilterType" class="compact-input">
-                    <option value="">All</option>
-                    <option value="Credit">Credit</option>
-                    <option value="Debit">Debit</option>
-                    <option value="Debt">Debt</option>
-                </select>
-            </div>
-            <div class="filter-item">
-                <label for="startDate">Start:</label>
-                <input type="date" id="startDate" @bind="StartDate" class="compact-input"/>
-            </div>
-            <div class="filter-item">
-                <label for="endDate">End:</label>
-                <input type="date" id="endDate" @bind="EndDate" class="compact-input"/>
-            </div>
-            <div class="filter-item buttons">
-                <button @onclick="ApplyFiltersAndSearch" class="btn btn-primary btn-sm">Apply</button>
-                <button @onclick="ClearFilters" class="btn btn-secondary btn-sm">Clear</button>
-            </div>
-        </div>
-    </div>
-    <div class="sort-container mt-4">
-        <h3>Sorting</h3>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="sortDate">Sort by:</label>
-                <select id="sortDate" @bind="SortBy" class="form-control">
-                    <option value="Date">Date</option>
-                </select>
-            </div>
-            <div class="form-group col-md-6">
-                <label>Order:</label>
-                <div class="d-flex align-items-center">
-                    <div class="form-check mr-3">
-                        <input type="radio" id="ascending" name="sortOrder" checked="@(IsAscending)"
-                               @onchange="@(() => IsAscending = true)" class="form-check-input"/>
-                        <label for="ascending" class="form-check-label">Ascending</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="radio" id="descending" name="sortOrder" checked="@(!IsAscending)"
-                               @onchange="@(() => IsAscending = false)" class="form-check-input"/>
-                        <label for="descending" class="form-check-label">Descending</label>
-                    </div>
+
+    <!-- Filters and sorting section -->
+    <div class="filters-container">
+        <!-- Filters subsection -->
+        <div class="filter-section">
+            <h2 class="section-title">Filters</h2>
+            <div class="filters-row">
+                <!-- Filter for transaction title -->
+                <div class="filter-item">
+                    <label for="searchTitle">Title</label>
+                    <input type="text" id="searchTitle" class="filter-input"
+                           placeholder="Search by title" @bind="SearchTitle" />
+                </div>
+                <!-- Filter for transaction type -->
+                <div class="filter-item">
+                    <label for="filterType">Type</label>
+                    <select id="filterType" class="filter-input" @bind="FilterType">
+                        <option value="">All Types</option>
+                        <option value="Credit">Credit</option>
+                        <option value="Debit">Debit</option>
+                        <option value="Debt">Debt</option>
+                    </select>
+                </div>
+                <!-- Filter for transaction tags -->
+                <div class="filter-item">
+                    <label for="filterTags">Tags</label>
+                    <input type="text" id="filterTags" class="filter-input"
+                           placeholder="Filter by tags" @bind="FilterTags" />
+                </div>
+                <!-- Filters for date range -->
+                <div class="filter-item">
+                    <label for="startDate">Start Date</label>
+                    <input type="date" id="startDate" class="filter-input" @bind="StartDate" />
+                </div>
+                <div class="filter-item">
+                    <label for="endDate">End Date</label>
+                    <input type="date" id="endDate" class="filter-input" @bind="EndDate" />
+                </div>
+                <!-- Apply and clear filters buttons -->
+                <div class="filter-item" style="flex: 0 0 auto;">
+                    <button @onclick="ApplyFiltersAndSearch" class="btn btn-primary">Apply</button>
+                    <button @onclick="ClearFilters" class="btn btn-outline-secondary">Clear</button>
                 </div>
             </div>
         </div>
-        <button @onclick="ApplySorting" class="btn btn-secondary btn-sm">Sort</button>
-        <button @onclick="() => NavigateToAddPage()" class="btn btn-primary btn-sm">Add Transactions</button>
-        <button @onclick="ExportToCsvAsync" class="btn btn-success btn-sm">
-            <i class="fas fa-file-export me-1"></i> Export to CSV
-        </button>
+
+        <!-- Sorting subsection -->
+        <div class="filter-section">
+            <h2 class="section-title">Sort Options</h2>
+            <div class="filters-row">
+                <!-- Sort by field -->
+                <div class="filter-item">
+                    <label for="sortBy">Sort by</label>
+                    <select id="sortBy" class="filter-input" @bind="SortBy">
+                        <option value="Date">Date</option>
+                    </select>
+                </div>
+                <!-- Sort order selection -->
+                <div class="filter-item">
+                    <div class="d-flex gap-3">
+                        <!-- Radio button for ascending order -->
+                        <div class="form-check">
+                            <input type="radio" id="ascending" name="sortOrder" class="form-check-input"
+                                   checked="@IsAscending" @onchange="@(() => IsAscending = true)" />
+                            <label class="form-check-label" for="ascending">Ascending</label>
+                        </div>
+                        <!-- Radio button for descending order -->
+                        <div class="form-check">
+                            <input type="radio" id="descending" name="sortOrder" class="form-check-input"
+                                   checked="@(!IsAscending)" @onchange="@(() => IsAscending = false)" />
+                            <label class="form-check-label" for="descending">Descending</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Apply sorting button -->
+                <div class="filter-item" style="flex: 0 0 auto;">
+                    <button @onclick="ApplySorting" class="btn btn-secondary">Apply Sort</button>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-<div class="table-container mt-4">
-<table class="transactions-table table table-striped">
-<thead>
-<tr>
-    <th>ID</th>
-    <th>Title</th>
-    <th>Amount</th>
-    <th>Type</th>
-    <th>Date</th>
-    <th>Tags</th>
-    <th>Note</th>
-    <th>Actions</th>
-</tr>
-</thead>
-<tbody>
-<td colspan="8">No transactions available</td>
 
-
-@foreach (var transaction in FilteredTransactions)
-{
-    <tr>
-        <td>@transaction.TransactionId</td>
-        <td>@transaction.Title</td>
-        <td>@FormatAmount(transaction.Amount)</td>
-        <td>
-            @transaction.Type
-        </td>
-        <td>@transaction.Date</td>
-        <td>
-            @if (!string.IsNullOrEmpty(transaction.Tags))
+    <!-- Transactions table -->
+    <div class="transactions-table">
+        <table class="table table-hover mb-0">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Tags</th>
+                <th>Note</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Display message if no transactions are found -->
+            @if (!FilteredTransactions.Any())
             {
-                <div class="tags-wrapper">
-                    @foreach (var tag in transaction.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries))
-                    {
-                        <span class="tag-badge">@tag.Trim()</span>
-                    }
-                </div>
+                <tr>
+                    <td colspan="8" class="text-center py-4">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📊</div>
+                            <h4>No transactions found</h4>
+                            <p>Start by adding your first transaction!</p>
+                        </div>
+                    </td>
+                </tr>
             }
-        </td>
-        <td>@transaction.Note</td>
-        <td>
-            <button @onclick="() => NavigateToEditPage(transaction.TransactionId)" class="btn btn-primary btn-sm">Edit</button>
-            <button @onclick="() => DeleteTransaction(transaction.TransactionId)" class="btn btn-danger btn-sm">Delete</button>
-        </td>
-    </tr>
-}
-
-</tbody>
-</table>
-</div>
+            <!-- Display each transaction -->
+            @foreach (var transaction in FilteredTransactions)
+            {
+                <tr>
+                    <td>@transaction.TransactionId</td>
+                    <td>@transaction.Title</td>
+                    <!-- Conditional styling for transaction amount -->
+                    <td class="@(transaction.Type.ToLower() == "debit" ? "text-danger" : "text-success")">
+                        @FormatAmount(transaction.Amount)
+                    </td>
+                    <td>@transaction.Type</td>
+                    <td>@transaction.Date.ToString()</td>
+                    <td>
+                        <!-- Display tags as badges -->
+                        @if (!string.IsNullOrEmpty(transaction.Tags))
+                        {
+                            foreach (var tag in transaction.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                            {
+                                <span class="tag-badge">@tag.Trim()</span>
+                            }
+                        }
+                    </td>
+                    <td>@transaction.Note</td>
+                    <td>
+                        <!-- Action buttons for edit and delete -->
+                        <button class="action-btn edit-btn" @onclick="() => NavigateToEditPage(transaction.TransactionId)">
+                            ✏️
+                        </button>
+                        <button class="action-btn delete-btn" @onclick="() => DeleteTransaction(transaction.TransactionId)">
+                            🗑️
+                        </button>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
 </div>

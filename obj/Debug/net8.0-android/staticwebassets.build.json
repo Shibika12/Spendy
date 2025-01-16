@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "5d+EY/OjUaoFLYXuHhhEUV8/HkdrSop5cCIsMpFq750=",
+  "Hash": "7dGVgR/o16VrNQHYEMypEB7uD6EoRrVk8JHmZ/O3VMg=",
   "Source": "ShibikaKhatri22068731CW1",
   "BasePath": "/",
   "Mode": "Root",
@@ -148,6 +148,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/css/bootstrap/bootstrap.min.css.map"
+    },
+    {
+      "Identity": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/wwwroot/css/custom-style.css",
+      "SourceId": "ShibikaKhatri22068731CW1",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/wwwroot/",
+      "BasePath": "/",
+      "RelativePath": "css/custom-style.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/css/custom-style.css"
     },
     {
       "Identity": "/Users/shibikakhatri/Desktop/ShibikaKhatri22068731CW1/wwwroot/favicon.png",

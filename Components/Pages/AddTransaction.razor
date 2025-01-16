@@ -5,40 +5,55 @@
 @inject ITransactionService TransactionService
 @inject ITagService TagService
 
-<div class="form-container">
-    <h3 class="form-title">Add New Transaction</h3>
+<div class="add-transaction-container">
+    <!-- Page header section -->
+    <div class="page-header">
+        <h1 class="page-title">Add New Transaction</h1>
+    </div>
+
+    <!-- EditForm to handle the input fields and submission -->
     <EditForm Model="@newTransaction" OnValidSubmit="AddNewTransaction">
+        <!-- DataAnnotationsValidator is used for validation based on model annotations -->
         <DataAnnotationsValidator />
 
-        <div class="form-group">
-            <label for="title">Title:</label>
-            <InputText id="title" class="form-control" @bind-Value="newTransaction.Title" placeholder="Enter title" />
-            <ValidationMessage For="@(() => newTransaction.Title)" class="text-danger" />
+        <!-- Form section for transaction details -->
+        <div class="form-section">
+            <!-- Input for transaction title -->
+            <div class="form-group">
+                <label for="title">Title</label>
+                <!-- Bind transaction title input to the model -->
+                <InputText id="title" class="form-control" @bind-Value="newTransaction.Title" placeholder="Enter transaction title" />
+                <ValidationMessage For="@(() => newTransaction.Title)" class="text-danger" />
+            </div>
+
+            <!-- Input for transaction amount -->
+            <div class="form-group">
+                <label for="amount">Amount</label>
+                <InputNumber id="amount" class="form-control" @bind-Value="newTransaction.Amount" placeholder="0.00" />
+                <ValidationMessage For="@(() => newTransaction.Amount)" class="text-danger" />
+            </div>
+
+            <!-- Dropdown for transaction type -->
+            <div class="form-group">
+                <label for="type">Transaction Type</label>
+                <InputSelect id="type" class="form-control" @bind-Value="newTransaction.Type">
+                    <option value="">Select Type</option>
+                    <option value="Credit">Credit</option>
+                    <option value="Debit">Debit</option>
+                    <option value="Debt">Debt</option>
+                </InputSelect>
+                <ValidationMessage For="@(() => newTransaction.Type)" class="text-danger" />
+            </div>
+
+            <!-- Input for transaction date -->
+            <div class="form-group">
+                <label for="date">Date</label>
+                <InputDate id="date" class="form-control" @bind-Value="newTransaction.Date" />
+                <ValidationMessage For="@(() => newTransaction.Date)" class="text-danger" />
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="amount">Amount:</label>
-            <InputNumber id="amount" class="form-control" @bind-Value="newTransaction.Amount" placeholder="Enter amount" />
-            <ValidationMessage For="@(() => newTransaction.Amount)" class="text-danger" />
-        </div>
-
-        <div class="form-group">
-            <label for="type">Type:</label>
-            <InputSelect id="type" class="form-control" @bind-Value="newTransaction.Type">
-                <option value="">Select Type</option>
-                <option value="Credit">Credit</option>
-                <option value="Debit">Debit</option>
-                <option value="Debt">Debt</option>
-            </InputSelect>
-            <ValidationMessage For="@(() => newTransaction.Type)" class="text-danger" />
-        </div>
-
-        <div class="form-group">
-            <label for="date">Date:</label>
-            <InputDate id="date" class="form-control" @bind-Value="newTransaction.Date" />
-            <ValidationMessage For="@(() => newTransaction.Date)" class="text-danger" />
-        </div>
-
+        <!-- Display an error message if the submission fails -->
         @if (!string.IsNullOrEmpty(errorMessage))
         {
             <div class="alert alert-danger" role="alert">
@@ -46,17 +61,21 @@
             </div>
         }
 
-        <div class="form-group">
-            <label>Tags:</label>
-            <div class="tags-container mb-2">
+        <!-- Tags management section -->
+        <div class="tags-section">
+            <h3 class="tags-title">Tags</h3>
+            <div class="tags-container">
+                <!-- Render available tags with checkboxes -->
                 @foreach (var tag in availableTags)
                 {
-                    <div class="tag-checkbox">
+                    <div class="tag-item">
+                        <!-- Checkbox for each tag -->
                         <input type="checkbox" id="@tag"
                                checked="@(selectedTags.Contains(tag))"
                                @onchange="@(e => ToggleTag(tag))" />
                         <label for="@tag">
                             @tag
+                            <!-- Show delete button only for custom tags -->
                             @if (!_defaultTags.Contains(tag))
                             {
                                 <button type="button" class="btn-delete-tag" @onclick="@(() => DeleteCustomTag(tag))" @onclick:preventDefault>×</button>
@@ -65,39 +84,51 @@
                     </div>
                 }
             </div>
+            <!-- Input to add new custom tags -->
             <div class="add-tag-container">
                 <input type="text" class="form-control"
                        @bind="newTag"
                        placeholder="Add custom tag" />
-                <button type="button" class="btn btn-outline-primary" @onclick="AddCustomTag">
+                <button type="button" class="btn btn-outline" @onclick="AddCustomTag">
                     Add Tag
                 </button>
             </div>
         </div>
 
+        <!-- Input for transaction notes -->
         <div class="form-group">
-            <label for="note">Notes:</label>
-            <InputTextArea id="note" class="form-control" @bind-Value="newTransaction.Note" rows="4" placeholder="Add any additional notes here..." />
+            <label for="note">Notes</label>
+            <InputTextArea id="note" class="form-control" @bind-Value="newTransaction.Note" rows="4"
+                           placeholder="Add any additional notes here..." />
         </div>
+
+        <!-- Additional fields for debts -->
         @if (newTransaction.Type == "Debt")
         {
-            <!-- Fields specific to debts -->
-            <div class="form-group mb-3">
-                <label for="sourceOfDebt" class="form-label">Source of Debt:</label>
+            <!-- Input for source of debt -->
+            <div class="form-group">
+                <label for="sourceOfDebt">Source of Debt</label>
                 <InputText id="sourceOfDebt" class="form-control" @bind-Value="newTransaction.SourceOfDebt" placeholder="Enter source of debt" />
                 <ValidationMessage For="@(() => newTransaction.SourceOfDebt)" class="text-danger" />
             </div>
-            <div class="form-group mb-3">
-                <label for="dueDate" class="form-label">Due Date:</label>
+            <!-- Input for debt due date -->
+            <div class="form-group">
+                <label for="dueDate">Due Date</label>
                 <InputDate id="dueDate" class="form-control" @bind-Value="newTransaction.DueDate" />
                 <ValidationMessage For="@(() => newTransaction.DueDate)" class="text-danger" />
             </div>
-
         }
 
+        <!-- Action buttons -->
         <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Add Transaction</button>
+            <!-- Button to cancel and navigate back -->
+            <button type="button" class="btn btn-outline" @onclick="@(() => Nav.NavigateTo("/transactions", false))">
+                Cancel
+            </button>
+            <!-- Submit button to add the transaction -->
+            <button type="submit" class="btn btn-primary">
+                <span>➕</span> Add Transaction
+            </button>
         </div>
-
     </EditForm>
 </div>

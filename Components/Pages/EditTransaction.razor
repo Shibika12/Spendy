@@ -1,98 +1,142 @@
-@page "/edit-transaction/{TransactionId:int}"
+@page "/edit-transaction/{Id:int}"
 @using ShibikaKhatri22068731CW1.Services.Interface
-@using ShibikaKhatri22068731CW1.Model;
 @inject NavigationManager Nav
 @inject ITransactionService TransactionService
 @inject ITagService TagService
 
-@if (transaction == null)
-{
-    <p>Loading...</p>
-}
-else
-{ 
-    <form class="p-4 border rounded shadow-sm" style="max-width: 500px; margin: 0 auto; background-color: #fdfdfd;">
-    <h3 class="text-center mb-4" style="font-weight: bold; color: #333;">Edit Transaction Form</h3>
-    <div class="form-group mb-3">
-        <label for="title" style="font-weight: bold; color: #555;">Title:</label>
-        <input id="title" class="form-control" type="text" @bind="transaction.Title"
-               placeholder="Enter title" style="border: 1px solid #ccc; border-radius: 4px; padding: 10px;" />
+<div class="edit-transaction-container">
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">Edit Transaction</h1>
     </div>
-    <div class="form-group mb-3">
-        <label for="amount" style="font-weight: bold; color: #555;">Amount:</label>
-        <input id="amount" class="form-control" type="number" @bind="transaction.Amount"
-               placeholder="Enter amount" style="border: 1px solid #ccc; border-radius: 4px; padding: 10px;" />
-    </div>
-    <div class="form-group mb-3">
-        <label for="type" style="font-weight: bold; color: #555;">Type:</label>
-        <input id="type" class="form-control" value="@transaction.Type" readonly
-               style="background-color: #f9f9f9; border: 1px solid #eaeaea; border-radius: 4px; padding: 10px;" />
-    </div>
-        @if (transaction.Type == "Debt")
-        {
-            <div class="form-group mb-3">
-                <label for="sourceOfDebt" style="font-weight: bold; color: #555;">Source of Debt:</label>
-                <input id="sourceOfDebt" class="form-control" type="text" @bind="transaction.SourceOfDebt"
-                       placeholder="Enter source of debt" style="border: 1px solid #ccc; border-radius: 4px; padding: 10px;" />
-            </div>
-            <div class="form-group mb-3">
-                <label for="dueDate" style="font-weight: bold; color: #555;">Due Date:</label>
-                <input id="dueDate" class="form-control" type="date" @bind="transaction.DueDate"
-                       style="border: 1px solid #ccc; border-radius: 4px; padding: 10px;" />
-            </div>
 
-            <div class="form-group mb-3">
-                <label for="isCleared" style="font-weight: bold; color: #555;">Is Debt Cleared?</label>
-                <select id="isCleared" class="form-control" @bind="transaction.IsCleared"
-                        style="border: 1px solid #ccc; border-radius: 4px; padding: 10px;">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                </select>
-            </div>
-        }
-    <div class="form-group mb-3">
-        <label for="date" style="font-weight: bold; color: #555;">Date:</label>
-        <input id="date" class="form-control" type="date" @bind="transaction.Date"
-               style="border: 1px solid #ccc; border-radius: 4px; padding: 10px;" />
-    </div>
-        <div class="form-group mb-3">
-            <label for="tags">Tags:</label>
-            <div class="d-flex flex-wrap gap-2 mb-2">
-                @foreach (var tag in availableTags)
-                {
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input"
-                               checked="@(selectedTags.Contains(tag))"
-                               @onchange="@(e => ToggleTag(tag))" />
-                        <label class="form-check-label">@tag</label>
-                    </div>
-                }
-            </div>
-            <div class="input-group">
-                <input type="text" class="form-control" @bind="newTag"
-                       placeholder="Add custom tag" />
-                <button class="btn btn-outline-secondary" type="button"
-                        @onclick="AddCustomTag">Add Tag</button>
-            </div>
+    <!-- Show loading spinner if transaction data is not yet loaded -->
+    @if (transaction == null)
+    {
+        <div class="loading-overlay">
+            <div class="loading-spinner"></div>
         </div>
-    <div class="form-group mb-3">
-        <label for="note" style="font-weight: bold; color: #555;">Note:</label>
-        <textarea id="note" class="form-control" @bind="transaction.Note"
-                      placeholder="Enter additional notes" style="border: 1px solid #ccc; border-radius: 4px; padding: 10px;">
+    }
+    else
+    {
+        <!-- Form for editing the transaction -->
+        <EditForm Model="@transaction" OnValidSubmit="HandleValidSubmit">
+            <!-- Validation support -->
+            <DataAnnotationsValidator />
 
-        </textarea>
-    </div>
-    <div class="d-flex justify-content-between mt-4">
-        <button type="button" @onclick="SaveTransaction"
-                class="btn btn-primary"
-                style="background-color: black; color: white; border: none; padding: 10px 20px; border-radius: 4px; font-weight: bold;">
-            Save
-        </button>
-        <button type="button" @onclick="Cancel"
-                class="btn btn-secondary"
-                style="background-color: black; color: white; border: none; padding: 10px 20px; border-radius: 4px; font-weight: bold;">
-            Cancel
-        </button>
-    </div>
-    </form>
-}
+            <!-- Transaction Details Section -->
+            <div class="form-section">
+                <!-- Title Field -->
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <InputText id="title" class="form-control" @bind-Value="transaction.Title" />
+                    <ValidationMessage For="@(() => transaction.Title)" class="text-danger" />
+                </div>
+
+                <!-- Amount Field -->
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <InputNumber id="amount" class="form-control" @bind-Value="transaction.Amount" />
+                    <ValidationMessage For="@(() => transaction.Amount)" class="text-danger" />
+                </div>
+
+                <!-- Transaction Type Dropdown -->
+                <div class="form-group">
+                    <label for="type">Transaction Type</label>
+                    <InputSelect id="type" class="form-control" @bind-Value="transaction.Type">
+                        <option value="">Select Type</option>
+                        <option value="Credit">Credit</option>
+                        <option value="Debit">Debit</option>
+                        <option value="Debt">Debt</option>
+                    </InputSelect>
+                    <ValidationMessage For="@(() => transaction.Type)" class="text-danger" />
+                </div>
+
+                <!-- Date Field -->
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <InputDate id="date" class="form-control" @bind-Value="transaction.Date" />
+                    <ValidationMessage For="@(() => transaction.Date)" class="text-danger" />
+                </div>
+            </div>
+
+            <!-- Tags Section -->
+            <div class="tags-section">
+                <h3 class="tags-title">Tags</h3>
+                <!-- List of available tags -->
+                <div class="tags-container">
+                    @foreach (var tag in availableTags)
+                    {
+                        <div class="tag-item">
+                            <input type="checkbox" id="@tag"
+                                   checked="@(selectedTags.Contains(tag))"
+                                   @onchange="@(e => ToggleTag(tag))" />
+                            <label for="@tag">
+                                @tag
+                                <!-- Allow deleting custom tags but not default tags -->
+                                @if (!_defaultTags.Contains(tag))
+                                {
+                                    <button type="button" class="btn-delete-tag" @onclick="@(() => DeleteCustomTag(tag))" @onclick:preventDefault>×</button>
+                                }
+                            </label>
+                        </div>
+                    }
+                </div>
+
+                <!-- Add new custom tag -->
+                <div class="add-tag-container">
+                    <input type="text" class="form-control"
+                           @bind="newTag"
+                           placeholder="Add custom tag" />
+                    <button type="button" class="btn btn-outline" @onclick="AddCustomTag">
+                        Add Tag
+                    </button>
+                </div>
+            </div>
+
+            <!-- Notes Field -->
+            <div class="form-group">
+                <label for="note">Notes</label>
+                <InputTextArea id="note" class="form-control" @bind-Value="transaction.Note" rows="4" />
+            </div>
+
+            <!-- Additional Fields for Debt Type -->
+            @if (transaction.Type == "Debt")
+            {
+                <!-- Source of Debt -->
+                <div class="form-group">
+                    <label for="sourceOfDebt">Source of Debt</label>
+                    <InputText id="sourceOfDebt" class="form-control" @bind-Value="transaction.SourceOfDebt" />
+                    <ValidationMessage For="@(() => transaction.SourceOfDebt)" class="text-danger" />
+                </div>
+
+                <!-- Due Date for Debt -->
+                <div class="form-group">
+                    <label for="dueDate">Due Date</label>
+                    <InputDate id="dueDate" class="form-control" @bind-Value="transaction.DueDate" />
+                    <ValidationMessage For="@(() => transaction.DueDate)" class="text-danger" />
+                </div>
+            }
+
+            <!-- Display error message if any -->
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="alert alert-danger" role="alert">
+                    @errorMessage
+                </div>
+            }
+
+            <!-- Action Buttons -->
+            <div class="form-actions">
+                <!-- Cancel button redirects to the transactions list -->
+                <button type="button" class="btn btn-outline" @onclick="@(() => Nav.NavigateTo("/transactions", false))">
+                    Cancel
+                </button>
+                <!-- Save button to submit the form -->
+                <button type="submit" class="btn btn-primary">
+                    <span>💾</span> Save Changes
+                </button>
+            </div>
+        </EditForm>
+    }
+</div>

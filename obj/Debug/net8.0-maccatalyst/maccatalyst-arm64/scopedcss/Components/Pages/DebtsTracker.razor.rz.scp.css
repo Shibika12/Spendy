@@ -1,0 +1,190 @@
+.container-fluid[b-3ya65sf18j] {
+    background-color: var(--background-color);
+    min-height: 100vh;
+}
+
+.page-header[b-3ya65sf18j] {
+    margin-bottom: 2rem;
+}
+
+.page-title[b-3ya65sf18j] {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Summary Cards */
+.summary-cards[b-3ya65sf18j] {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.summary-card[b-3ya65sf18j] {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+}
+
+.summary-card:hover[b-3ya65sf18j] {
+    transform: translateY(-2px);
+}
+
+.card-header[b-3ya65sf18j] {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.card-value[b-3ya65sf18j] {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.pending-debt .card-value[b-3ya65sf18j] {
+    color: var(--danger-color);
+}
+
+.cleared-debt .card-value[b-3ya65sf18j] {
+    color: var(--accent-color);
+}
+
+.card-subtitle[b-3ya65sf18j] {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+/* Debt Table Card */
+.debt-table-card[b-3ya65sf18j] {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.card-header-tabs[b-3ya65sf18j] {
+    margin: -0.5rem 0;
+    border-bottom: none;
+}
+
+.nav-link[b-3ya65sf18j] {
+    color: var(--text-secondary);
+    padding: 1rem 1.5rem;
+    border: none;
+    border-bottom: 2px solid transparent;
+}
+
+.nav-link.active[b-3ya65sf18j] {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+.card-body[b-3ya65sf18j] {
+    padding: 1.5rem;
+}
+
+/* Table Styles */
+.table[b-3ya65sf18j] {
+    margin-bottom: 0;
+}
+
+.table th[b-3ya65sf18j] {
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    padding: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.table td[b-3ya65sf18j] {
+    padding: 1rem;
+    vertical-align: middle;
+}
+
+.debt-info[b-3ya65sf18j] {
+    display: flex;
+    flex-direction: column;
+}
+
+.debt-title[b-3ya65sf18j] {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.debt-source[b-3ya65sf18j] {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.status-badge[b-3ya65sf18j] {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.status-pending[b-3ya65sf18j] {
+    background-color: #FEF2F2;
+    color: var(--danger-color);
+}
+
+.status-cleared[b-3ya65sf18j] {
+    background-color: #F0FDF4;
+    color: var(--accent-color);
+}
+
+/* Action Buttons */
+.action-btn[b-3ya65sf18j] {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    padding: 0.25rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin: 0 0.25rem;
+}
+
+.action-btn:hover[b-3ya65sf18j] {
+    transform: scale(1.1);
+}
+
+.edit-btn:hover[b-3ya65sf18j] {
+    color: var(--secondary-color);
+}
+
+.check-btn:hover[b-3ya65sf18j] {
+    color: var(--accent-color);
+}
+
+/* Empty State */
+.empty-state[b-3ya65sf18j] {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+}
+
+.empty-state-icon[b-3ya65sf18j] {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .summary-cards[b-3ya65sf18j] {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-link[b-3ya65sf18j] {
+        padding: 0.75rem 1rem;
+    }
+}
